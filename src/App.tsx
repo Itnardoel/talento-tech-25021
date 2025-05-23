@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
 import { MainLayout } from "./layout/MainLayout";
-import { MainPage } from "./components/Main";
+import { MainPage } from "./components/MainPage";
 import { ProductDetail } from "./components/ProductDetail";
 import { CartPage } from "./components/CartPage";
 import { useEffect, useState } from "react";
