@@ -38,7 +38,19 @@ export default tseslint.config(
       ],
       ...reactX.configs["recommended-typescript"].rules,
       ...reactDom.configs.recommended.rules,
+      "@typescript-eslint/no-floating-promises": "off",
     },
   },
   eslintPluginPrettierRecommended,
+  {
+    rules: {
+      "prettier/prettier": [
+        "warn",
+        {
+          endOfLine: "auto",
+          plugins: ["prettier-plugin-tailwindcss"],
+        },
+      ],
+    },
+  },
 );
