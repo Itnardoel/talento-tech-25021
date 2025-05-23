@@ -1,38 +1,57 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { Route, Routes } from "react-router";
+import { MainLayout } from "./layout/MainLayout";
+import { MainPage } from "./components/Main";
+import { ProductDetail } from "./components/ProductDetail";
+import { CartPage } from "./components/CartPage";
+import { useEffect, useState } from "react";
+import { isAxiosError } from "axios";
+import { api } from "./utils/axios-instance";
+import type { Product } from "./types/product-type";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const getAllProducts = async () => {
+      setLoading(true);
+      try {
+        const { data: products } = await api.get<Product[]>("/products");
+        setProducts(products);
+      } catch (error) {
+        if (isAxiosError(error)) {
+          console.error("Error al obtener productos:", error.response);
+          setError(error.message);
+        } else {
+          console.error("Error desconocido", error);
+          setError("Ocurrió un error inesperado.");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getAllProducts();
+  }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer noopener">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer noopener">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button
-          type="button"
-          onClick={() => {
-            setCount((count) => count + 1);
-          }}
-        >
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route
+            path="/"
+            element={
+              <MainPage loading={loading} error={error} products={products} />
+            }
+          />
+          <Route path="/cart" element={<CartPage />} />
+          <Route
+            path="/product/:id"
+            element={<ProductDetail products={products} />}
+          />
+        </Route>
+      </Routes>
     </>
   );
 }
