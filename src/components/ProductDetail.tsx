@@ -65,7 +65,7 @@ export const ProductDetail = ({ products }: ProductDetailProps) => {
           <button
             type="button"
             onClick={() => {
-              handleAddProduct({ product: productById, count });
+              handleAddProduct({ productToAdd: productById, count });
             }}
             className="cursor-pointer rounded-lg bg-gray-500 font-bold"
           >
