@@ -1,18 +1,51 @@
-import { useState, useMemo, type PropsWithChildren } from "react";
+import { useState, useMemo, type ReactNode, useCallback } from "react";
 import { CartContext, type AddProductParams } from "./cart-context";
-import type { Product } from "@/types/product-type";
+import type { ProductInCart } from "@/types/product-type";
 
-type CartProviderProps = PropsWithChildren;
+interface CartProviderProps {
+  children: ReactNode;
+}
 
 export const CartProvider = ({ children }: CartProviderProps) => {
-  const [cart, setCart] = useState<Product[]>([]);
+  const [cart, setCart] = useState<ProductInCart[]>([]);
 
-  const handleAddProduct = ({ count, product }: AddProductParams) => {
-    console.log("AGREGASTE", product.name, count);
-    // setCart((prevCart) => [...prevCart, product]);
-  };
+  const handleAddProduct = useCallback(
+    ({ count, productToAdd }: AddProductParams) => {
+      const isInCart = cart.findIndex(
+        (product) => product.id === productToAdd.id,
+      );
+      console.log("isInCart", isInCart);
 
-  const value = useMemo(() => ({ cart, handleAddProduct }), [cart]);
+      if (isInCart !== -1) {
+        setCart((prevCart) => {
+          const productToUpdate = prevCart[isInCart];
+
+          productToUpdate.quantity += count;
+
+          return prevCart;
+        });
+      } else {
+        setCart((prevCart) => [
+          ...prevCart,
+          { ...productToAdd, quantity: count },
+        ]);
+      }
+    },
+    [cart],
+  );
+
+  const handleDeleteProduct = useCallback((id: string) => {
+    setCart((prevCart) => {
+      const updatedCart = prevCart.filter((product) => product.id !== id);
+
+      return updatedCart;
+    });
+  }, []);
+
+  const value = useMemo(
+    () => ({ cart, handleAddProduct, handleDeleteProduct }),
+    [cart, handleAddProduct, handleDeleteProduct],
+  );
 
   return <CartContext value={value}>{children}</CartContext>;
 };

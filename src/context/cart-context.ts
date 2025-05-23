@@ -1,14 +1,15 @@
 import { createContext } from "react";
-import type { Product } from "@/types/product-type";
+import type { Product, ProductInCart } from "@/types/product-type";
 
 export interface AddProductParams {
-  product: Product;
+  productToAdd: Product;
   count: number;
 }
 
 interface CartContext {
-  cart: Product[] | null;
-  handleAddProduct: ({ product, count }: AddProductParams) => void;
+  cart: ProductInCart[];
+  handleAddProduct: ({ productToAdd, count }: AddProductParams) => void;
+  handleDeleteProduct: (id: string) => void;
 }
 
 export const CartContext = createContext<CartContext | undefined>(undefined);
