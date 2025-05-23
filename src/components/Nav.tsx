@@ -13,6 +13,12 @@ export const Nav = () => {
         <li>
           <Link to="/cart">Carrito {cart.length === 0 ? "" : cart.length}</Link>
         </li>
+        <li>
+          <Link to="/user">Usuario</Link>
+        </li>
+        <li>
+          <Link to="/protected">Ruta privada</Link>
+        </li>
       </ul>
     </nav>
   );

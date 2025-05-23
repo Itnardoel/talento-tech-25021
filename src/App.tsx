@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 import { isAxiosError } from "axios";
 import { api } from "./utils/axios-instance";
 import type { Product } from "./types/product-type";
+import { UserPage } from "./components/UserPage";
+import { PrivatePage } from "./components/PrivatePage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -50,6 +53,10 @@ function App() {
             path="/product/:id"
             element={<ProductDetail products={products} />}
           />
+          <Route path="/user" element={<UserPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/protected" element={<PrivatePage />} />
+          </Route>
         </Route>
       </Routes>
     </>
