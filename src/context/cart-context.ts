@@ -10,6 +10,7 @@ interface CartContext {
   cart: ProductInCart[];
   handleAddProduct: ({ productToAdd, count }: AddProductParams) => void;
   handleDeleteProduct: (id: string) => void;
+  handleClearCart: () => void;
 }
 
 export const CartContext = createContext<CartContext | undefined>(undefined);

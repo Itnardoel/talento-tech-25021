@@ -42,8 +42,12 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     });
   }, []);
 
+  const handleClearCart = () => {
+    setCart([]);
+  };
+
   const value = useMemo(
-    () => ({ cart, handleAddProduct, handleDeleteProduct }),
+    () => ({ cart, handleAddProduct, handleDeleteProduct, handleClearCart }),
     [cart, handleAddProduct, handleDeleteProduct],
   );
 

@@ -2,7 +2,7 @@ import { useCart } from "@/hooks/use-cart";
 import { cartReducer } from "@/utils/cart-reducer";
 
 export const CartPage = () => {
-  const { cart, handleDeleteProduct } = useCart();
+  const { cart, handleDeleteProduct, handleClearCart } = useCart();
 
   return (
     <main
@@ -59,13 +59,24 @@ export const CartPage = () => {
             </table>
           </section>
 
-          <div className="flex flex-col items-start p-4 leading-4">
-            <p className="text-xl font-bold">
-              Total: $ {cartReducer(cart, "totalPrice")}
-            </p>
-            <p className="font-semibold">
-              Productos agregados: {cartReducer(cart, "totalProducts")}
-            </p>
+          <div className="flex items-center justify-between">
+            <div className="flex flex-col items-start p-4 leading-4">
+              <p className="text-xl font-bold">
+                Total: $ {cartReducer(cart, "totalPrice")}
+              </p>
+              <p className="font-semibold">
+                Productos agregados: {cartReducer(cart, "totalProducts")}
+              </p>
+            </div>
+            <div className="p-4">
+              <button
+                type="button"
+                onClick={handleClearCart}
+                className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2"
+              >
+                Vaciar carrito
+              </button>
+            </div>
           </div>
         </>
       )}
