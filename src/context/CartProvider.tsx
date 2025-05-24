@@ -14,7 +14,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       const isInCart = cart.findIndex(
         (product) => product.id === productToAdd.id,
       );
-      console.log("isInCart", isInCart);
 
       if (isInCart !== -1) {
         setCart((prevCart) => {
