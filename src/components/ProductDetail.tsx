@@ -2,6 +2,7 @@ import { useCart } from "@/hooks/use-cart";
 import type { Product } from "@/types/product-type";
 import { useState, type MouseEvent } from "react";
 import { useParams } from "react-router";
+import { toast } from "sonner";
 
 interface ProductDetailProps {
   products: Product[];
@@ -22,6 +23,13 @@ export const ProductDetail = ({ products }: ProductDetailProps) => {
         <p className="font-bold text-red-500">{`El producto con el ID ${id.toString()} no existe`}</p>
       </main>
     );
+
+  const onAddProduct = () => {
+    toast.success(
+      `Agregaste ${count.toString()} ${productById.name} al carrito`,
+    );
+    handleAddProduct({ productToAdd: productById, count });
+  };
 
   const handleCountOnClick = (event: MouseEvent<HTMLButtonElement>) => {
     const buttonText = event.currentTarget.textContent;
@@ -64,9 +72,7 @@ export const ProductDetail = ({ products }: ProductDetailProps) => {
           </div>
           <button
             type="button"
-            onClick={() => {
-              handleAddProduct({ productToAdd: productById, count });
-            }}
+            onClick={onAddProduct}
             className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2 font-bold"
           >
             Agregar al carrito

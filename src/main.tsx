@@ -5,6 +5,7 @@ import { CartProvider } from "./context/CartProvider.tsx";
 import App from "./App.tsx";
 import "./index.css";
 import { UserProvider } from "./context/UserProvider.tsx";
+import { Toaster } from "sonner";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 createRoot(document.getElementById("root")!).render(
@@ -12,6 +13,7 @@ createRoot(document.getElementById("root")!).render(
     <CartProvider>
       <UserProvider>
         <BrowserRouter>
+          <Toaster richColors />
           <App />
         </BrowserRouter>
       </UserProvider>

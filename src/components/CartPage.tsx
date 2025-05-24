@@ -1,8 +1,19 @@
 import { useCart } from "@/hooks/use-cart";
 import { cartReducer } from "@/utils/cart-reducer";
+import { toast } from "sonner";
 
 export const CartPage = () => {
   const { cart, handleDeleteProduct, handleClearCart } = useCart();
+
+  const onDeleteProduct = ({ id, name }: { id: string; name: string }) => {
+    toast.error(`${name} fue eliminado del carrito`);
+    handleDeleteProduct(id);
+  };
+
+  const onClearCart = () => {
+    toast.info("Se vació el carrito");
+    handleClearCart();
+  };
 
   return (
     <main
@@ -27,9 +38,7 @@ export const CartPage = () => {
               <tbody>
                 {cart.map(({ avatar, quantity, id, name, price }) => (
                   <tr className="h-20 border-b" key={id}>
-                    <td className="p-4 text-center font-semibold">
-                      {quantity}
-                    </td>
+                    <td className="p-4 font-semibold">{quantity}</td>
                     <td className="p-2 text-left font-semibold">{name}</td>
                     <td className="min-w-24 p-4 font-semibold">{price}</td>
                     <td className="min-w-24 p-4 font-semibold">
@@ -46,7 +55,7 @@ export const CartPage = () => {
                       <button
                         type="button"
                         onClick={() => {
-                          handleDeleteProduct(id);
+                          onDeleteProduct({ id, name });
                         }}
                         className="size-8 cursor-pointer rounded-lg bg-gray-500 font-bold"
                       >
@@ -71,7 +80,7 @@ export const CartPage = () => {
             <div className="p-4">
               <button
                 type="button"
-                onClick={handleClearCart}
+                onClick={onClearCart}
                 className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2"
               >
                 Vaciar carrito
