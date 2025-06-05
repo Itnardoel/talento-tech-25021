@@ -1,15 +1,16 @@
-import { Route, Routes } from "react-router";
-import { MainLayout } from "./layout/MainLayout";
-import { MainPage } from "./components/MainPage";
-import { ProductDetail } from "./components/ProductDetail";
-import { CartPage } from "./components/CartPage";
-import { useEffect, useState } from "react";
 import { isAxiosError } from "axios";
-import { api } from "./utils/axios-instance";
-import type { Product } from "./types/product-type";
-import { UserPage } from "./components/UserPage";
+import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router";
+
+import { CartPage } from "./components/CartPage";
+import { MainPage } from "./components/MainPage";
 import { PrivatePage } from "./components/PrivatePage";
+import { ProductDetail } from "./components/ProductDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { UserPage } from "./components/UserPage";
+import { MainLayout } from "./layout/MainLayout";
+import type { Product } from "./types/product-type";
+import { api } from "./utils/axios-instance";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);

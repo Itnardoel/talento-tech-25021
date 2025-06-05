@@ -1,5 +1,6 @@
-import { useUser } from "@/hooks/use-user";
 import { toast } from "sonner";
+
+import { useUser } from "@/hooks/use-user";
 
 export const UserPage = () => {
   const { user, handleLogin, handleLogout } = useUser();

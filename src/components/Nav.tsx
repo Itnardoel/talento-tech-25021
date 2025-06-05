@@ -1,5 +1,6 @@
-import { useCart } from "@/hooks/use-cart";
 import { Link, useLocation } from "react-router";
+
+import { useCart } from "@/hooks/use-cart";
 
 export const Nav = () => {
   const location = useLocation();

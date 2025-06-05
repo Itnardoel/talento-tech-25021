@@ -1,4 +1,5 @@
 import { createContext } from "react";
+
 import type { Product, ProductInCart } from "@/types/product-type";
 
 export interface AddProductParams {

@@ -1,5 +1,7 @@
 import { useState, useMemo, type ReactNode, useCallback } from "react";
+
 import { CartContext, type AddProductParams } from "./cart-context";
+
 import type { ProductInCart } from "@/types/product-type";
 
 interface CartProviderProps {

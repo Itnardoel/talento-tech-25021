@@ -1,8 +1,9 @@
-import { useCart } from "@/hooks/use-cart";
-import type { Product } from "@/types/product-type";
 import { useState, type MouseEvent } from "react";
 import { useParams } from "react-router";
 import { toast } from "sonner";
+
+import { useCart } from "@/hooks/use-cart";
+import type { Product } from "@/types/product-type";
 
 interface ProductDetailProps {
   products: Product[];

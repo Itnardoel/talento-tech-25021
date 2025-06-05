@@ -1,6 +1,7 @@
+import { toast } from "sonner";
+
 import { useCart } from "@/hooks/use-cart";
 import { cartReducer } from "@/utils/cart-reducer";
-import { toast } from "sonner";
 
 export const CartPage = () => {
   const { cart, handleDeleteProduct, handleClearCart } = useCart();
