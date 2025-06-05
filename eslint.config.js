@@ -6,6 +6,7 @@ import tseslint from "typescript-eslint";
 import reactX from "eslint-plugin-react-x";
 import reactDom from "eslint-plugin-react-dom";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import importPlugin from "eslint-plugin-import";
 
 export default tseslint.config(
   { ignores: ["dist"] },
@@ -24,11 +25,19 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    settings: {
+      "import/resolver": {
+        typescript: {
+          project: ["./tsconfig.app.json", "./tsconfig.node.json"],
+        },
+      },
+    },
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       "react-x": reactX,
       "react-dom": reactDom,
+      import: importPlugin,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -39,6 +48,13 @@ export default tseslint.config(
       ...reactX.configs["recommended-typescript"].rules,
       ...reactDom.configs.recommended.rules,
       "@typescript-eslint/no-floating-promises": "off",
+      "import/order": [
+        "warn",
+        {
+          "newlines-between": "always",
+          alphabetize: { order: "asc", caseInsensitive: true },
+        },
+      ],
     },
   },
   eslintPluginPrettierRecommended,

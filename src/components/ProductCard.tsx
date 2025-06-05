@@ -1,5 +1,6 @@
-import type { Product } from "@/types/product-type";
 import { useNavigate } from "react-router";
+
+import type { Product } from "@/types/product-type";
 
 interface ProductCardProps {
   product: Product;
