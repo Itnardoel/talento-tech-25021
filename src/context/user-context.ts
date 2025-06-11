@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 interface UserContext {
   user: boolean;
-  handleLogin: () => void;
+  handleLogin: (userName: string) => void;
   handleLogout: () => void;
 }
 
