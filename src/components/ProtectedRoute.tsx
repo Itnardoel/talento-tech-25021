@@ -5,7 +5,7 @@ import { useUser } from "@/hooks/use-user";
 const ProtectedRoute = () => {
   const { user } = useUser();
 
-  return user ? <Outlet /> : <Navigate to="/" replace />;
+  return user ? <Outlet /> : <Navigate to="/user" replace />;
 };
 
 export default ProtectedRoute;
