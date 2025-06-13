@@ -2,19 +2,24 @@ import { useState, useMemo, type ReactNode } from "react";
 
 import { UserContext } from "./user-context";
 
+import type { User } from "@/types/user-type";
+
 interface UserProviderProps {
   children: ReactNode;
 }
 
 export const UserProvider = ({ children }: UserProviderProps) => {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(localStorage.getItem("authToken"));
 
-  const handleLogin = () => {
-    setUser(true);
+  const handleLogin = (user: User) => {
+    const token = `fake-token-${user.email}-${user.role}`;
+    localStorage.setItem("authToken", token);
+    setUser(token);
   };
 
   const handleLogout = () => {
-    setUser(false);
+    localStorage.removeItem("authToken");
+    setUser(null);
   };
 
   const value = useMemo(() => ({ user, handleLogin, handleLogout }), [user]);

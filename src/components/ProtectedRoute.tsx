@@ -2,10 +2,22 @@ import { Navigate, Outlet } from "react-router";
 
 import { useUser } from "@/hooks/use-user";
 
-const ProtectedRoute = () => {
+interface ProtectedRouteProps {
+  allowedRole?: string;
+}
+
+const ProtectedRoute = ({ allowedRole }: ProtectedRouteProps) => {
   const { user } = useUser();
 
-  return user ? <Outlet /> : <Navigate to="/" replace />;
+  if (!user) {
+    return <Navigate to="/user" replace />;
+  }
+
+  if (allowedRole && !user.includes(allowedRole)) {
+    return <Navigate to="/user" replace />;
+  }
+
+  return <Outlet />;
 };
 
 export default ProtectedRoute;

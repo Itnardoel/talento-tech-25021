@@ -1,8 +1,10 @@
 import { createContext } from "react";
 
+import type { User } from "@/types/user-type";
+
 interface UserContext {
-  user: boolean;
-  handleLogin: () => void;
+  user: string | null;
+  handleLogin: (user: User) => void;
   handleLogout: () => void;
 }
 
