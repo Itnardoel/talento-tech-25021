@@ -1,14 +1,34 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
+
+import { useUser } from "@/hooks/use-user";
+import type { User } from "@/types/user-type";
 
 export const LoginForm = () => {
-  const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState<User>({
     email: "",
     password: "",
+    role: "USER",
   });
+
+  const { handleLogin } = useUser();
+
+  const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(formValues);
+
+    navigate("/");
+    if (formValues.email === "admin" && formValues.password === "1234") {
+      handleLogin({ ...formValues, role: "ADMIN" });
+      toast.success("Ingresaste con éxito como Admin");
+    } else if (formValues.email === "user" && formValues.password === "1234") {
+      handleLogin(formValues);
+      toast.success("Ingresaste con éxito como User");
+    } else {
+      toast.info("Credenciales incorrectas");
+    }
   };
 
   return (
