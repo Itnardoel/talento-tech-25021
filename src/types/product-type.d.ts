@@ -7,6 +7,8 @@ export interface Product {
   id: string;
 }
 
+export type ProductToAdd = Omit<Product, "id" | "createdAt" | "avatar">;
+
 export interface ProductInCart extends Product {
   quantity: number;
 }
