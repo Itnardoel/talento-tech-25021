@@ -1,11 +1,15 @@
 import { Link, useLocation } from "react-router";
 
 import { useCart } from "@/hooks/use-cart";
+import { useUser } from "@/hooks/use-user";
 
 export const Nav = () => {
   const location = useLocation();
 
+  const { user } = useUser();
   const { cart } = useCart();
+
+  const isAdmin = user?.includes("ADMIN");
 
   return (
     <nav className="bg-gray-600 p-2.5 text-white">
@@ -31,14 +35,16 @@ export const Nav = () => {
             Usuario
           </Link>
         </li>
-        <li>
-          <Link
-            to="/protected"
-            className={location.pathname === "/protected" ? "font-bold" : ""}
-          >
-            Ruta privada
-          </Link>
-        </li>
+        {isAdmin && (
+          <li>
+            <Link
+              to="/admin"
+              className={location.pathname === "/admin" ? "font-bold" : ""}
+            >
+              Admin
+            </Link>
+          </li>
+        )}
       </ul>
     </nav>
   );
