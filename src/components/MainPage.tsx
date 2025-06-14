@@ -1,14 +1,10 @@
 import { ProductCard } from "./ProductCard";
 
-import type { Product } from "@/types/product-type";
+import { useProduct } from "@/hooks/use-product";
 
-interface MainPageProps {
-  products: Product[];
-  loading: boolean;
-  error: string | null;
-}
+export const MainPage = () => {
+  const { error, loading, products } = useProduct();
 
-export const MainPage = ({ error, loading, products }: MainPageProps) => {
   return (
     <main className="grid grid-cols-[repeat(auto-fit,minmax(340px,1fr))] justify-items-center gap-4 p-2 sm:grid-cols-[repeat(auto-fit,minmax(400px,1fr))] sm:p-5">
       {loading && <p className="content-center">Cargando productos...</p>}

@@ -3,17 +3,14 @@ import { useParams } from "react-router";
 import { toast } from "sonner";
 
 import { useCart } from "@/hooks/use-cart";
-import type { Product } from "@/types/product-type";
+import { useProduct } from "@/hooks/use-product";
 
-interface ProductDetailProps {
-  products: Product[];
-}
-
-export const ProductDetail = ({ products }: ProductDetailProps) => {
+export const ProductDetail = () => {
   const [count, setCount] = useState(1);
 
   const { id } = useParams() as { id: string };
 
+  const { products } = useProduct();
   const { handleAddProduct } = useCart();
 
   const productById = products.find((product) => product.id === id);
@@ -29,7 +26,7 @@ export const ProductDetail = ({ products }: ProductDetailProps) => {
     toast.success(
       `Agregaste ${count.toString()} ${productById.name} al carrito`,
     );
-    handleAddProduct({ productToAdd: productById, count });
+    handleAddProduct({ ...productById, quantity: count });
   };
 
   const handleCountOnClick = (event: MouseEvent<HTMLButtonElement>) => {

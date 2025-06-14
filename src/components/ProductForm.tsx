@@ -1,12 +1,7 @@
 import { useState } from "react";
 
+import { useProduct } from "@/hooks/use-product";
 import type { ProductToAdd } from "@/types/product-type";
-
-interface ProductFormProps {
-  loading: boolean;
-  error: string | null;
-  onAddProduct: (product: ProductToAdd) => Promise<void>;
-}
 
 interface Errors {
   name?: string;
@@ -14,11 +9,7 @@ interface Errors {
   description?: string;
 }
 
-export const ProductForm = ({
-  onAddProduct,
-  loading,
-  error,
-}: ProductFormProps) => {
+export const ProductForm = () => {
   const [product, setProduct] = useState<ProductToAdd>({
     name: "",
     price: "",
@@ -29,6 +20,8 @@ export const ProductForm = ({
     price: "",
     description: "",
   });
+
+  const { addProduct, error, loading } = useProduct();
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -41,9 +34,7 @@ export const ProductForm = ({
     event.preventDefault();
 
     if (validarFormulario()) {
-      setProduct(product);
-
-      onAddProduct(product);
+      addProduct(product);
       setProduct({
         name: "",
         price: "",
