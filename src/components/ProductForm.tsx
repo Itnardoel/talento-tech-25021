@@ -1,12 +1,11 @@
 import { useState } from "react";
 
-import type { ProductToAdd } from "@/types/product-type";
-
-interface ProductFormProps {
-  loading: boolean;
-  error: string | null;
-  onAddProduct: (product: ProductToAdd) => Promise<void>;
-}
+import { useProduct } from "@/hooks/use-product";
+import type {
+  Product,
+  ProductToAdd,
+  ProductToEdit,
+} from "@/types/product-type";
 
 interface Errors {
   name?: string;
@@ -14,21 +13,23 @@ interface Errors {
   description?: string;
 }
 
-export const ProductForm = ({
-  onAddProduct,
-  loading,
-  error,
-}: ProductFormProps) => {
-  const [product, setProduct] = useState<ProductToAdd>({
-    name: "",
-    price: "",
-    description: "",
+interface ProductFormProps {
+  productForEdit?: Product;
+}
+
+export const ProductForm = ({ productForEdit }: ProductFormProps) => {
+  const [product, setProduct] = useState<ProductToAdd | ProductToEdit>({
+    name: productForEdit?.name ?? "",
+    price: productForEdit?.price ?? "",
+    description: productForEdit?.description ?? "",
   });
   const [errors, setErrors] = useState<Errors>({
     name: "",
     price: "",
     description: "",
   });
+
+  const { addProduct, editProduct, error, loading } = useProduct();
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -40,16 +41,21 @@ export const ProductForm = ({
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (validarFormulario()) {
-      setProduct(product);
-
-      onAddProduct(product);
+    if (validarFormulario() && !productForEdit) {
+      addProduct(product);
       setProduct({
         name: "",
         price: "",
         description: "",
       });
       setErrors({});
+      return;
+    }
+
+    if (validarFormulario() && productForEdit) {
+      editProduct({ ...product, id: productForEdit.id });
+      setErrors({});
+      return;
     }
   };
 
@@ -70,9 +76,19 @@ export const ProductForm = ({
     return Object.keys(draftErrors).length === 0;
   };
 
+  const actionLabel = loading
+    ? productForEdit
+      ? "Editando producto..."
+      : "Agregando producto..."
+    : productForEdit
+      ? "Editar producto"
+      : "Agregar producto";
+
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-      <h2 className="text-2xl font-bold">Agregar Producto</h2>
+      <h2 className="text-2xl font-bold">
+        {productForEdit ? "Editar Producto" : "Agregar Producto"}
+      </h2>
 
       <label className="flex flex-col gap-1 rounded-md">
         Nombre:
@@ -115,7 +131,7 @@ export const ProductForm = ({
         type="submit"
         className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2"
       >
-        {loading ? "Agregando producto..." : "Agregar producto"}
+        {actionLabel}
       </button>
       {error && <p className="content-center text-red-500">{error}</p>}
     </form>

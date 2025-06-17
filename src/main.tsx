@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import App from "./App.tsx";
 import { CartProvider } from "./context/CartProvider.tsx";
 import "./index.css";
+import { ProductProvider } from "./context/ProductProvider.tsx";
 import { UserProvider } from "./context/UserProvider.tsx";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -13,10 +14,12 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <CartProvider>
       <UserProvider>
-        <BrowserRouter>
-          <Toaster richColors />
-          <App />
-        </BrowserRouter>
+        <ProductProvider>
+          <BrowserRouter>
+            <Toaster richColors />
+            <App />
+          </BrowserRouter>
+        </ProductProvider>
       </UserProvider>
     </CartProvider>
   </StrictMode>,

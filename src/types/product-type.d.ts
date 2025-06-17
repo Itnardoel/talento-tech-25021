@@ -9,6 +9,8 @@ export interface Product {
 
 export type ProductToAdd = Omit<Product, "id" | "createdAt" | "avatar">;
 
+export type ProductToEdit = Omit<Product, "createdAt" | "avatar">;
+
 export interface ProductInCart extends Product {
   quantity: number;
 }

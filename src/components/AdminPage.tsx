@@ -1,38 +1,23 @@
-import { isAxiosError } from "axios";
-import { useState } from "react";
-import { toast } from "sonner";
+import { useLocation, useParams } from "react-router";
 
 import { ProductForm } from "./ProductForm";
 
-import type { ProductToAdd } from "@/types/product-type";
-import { api } from "@/utils/axios-instance";
+import { useProduct } from "@/hooks/use-product";
 
 export const AdminPage = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const location = useLocation();
+  const { id } = useParams();
 
-  const addProduct = async (product: ProductToAdd) => {
-    setLoading(true);
-    try {
-      await api.post<ProductToAdd>("/products", product);
+  const { getProductById } = useProduct();
+  const productById = getProductById(id);
 
-      toast.success(`Se agrego ${product.name} con éxito`);
-    } catch (error) {
-      if (isAxiosError(error)) {
-        console.error("Error al obtener productos:", error.response);
-        setError(error.message);
-      } else {
-        console.error("Error desconocido", error);
-        setError("Ocurrió un error inesperado.");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (id && !productById) {
+    return <div className="grid place-content-center">Cargando...</div>;
+  }
 
   return (
     <main className="grid place-content-center">
-      <ProductForm onAddProduct={addProduct} loading={loading} error={error} />
+      <ProductForm key={location.pathname} productForEdit={productById} />
     </main>
   );
 };

@@ -1,6 +1,6 @@
 import { useState, useMemo, type ReactNode, useCallback } from "react";
 
-import { CartContext, type AddProductParams } from "./cart-context";
+import { CartContext } from "./cart-context";
 
 import type { ProductInCart } from "@/types/product-type";
 
@@ -12,7 +12,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const [cart, setCart] = useState<ProductInCart[]>([]);
 
   const handleAddProduct = useCallback(
-    ({ count, productToAdd }: AddProductParams) => {
+    (productToAdd: ProductInCart) => {
       const isInCart = cart.findIndex(
         (product) => product.id === productToAdd.id,
       );
@@ -21,15 +21,12 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         setCart((prevCart) => {
           const productToUpdate = prevCart[isInCart];
 
-          productToUpdate.quantity += count;
+          productToUpdate.quantity += productToAdd.quantity;
 
           return prevCart;
         });
       } else {
-        setCart((prevCart) => [
-          ...prevCart,
-          { ...productToAdd, quantity: count },
-        ]);
+        setCart((prevCart) => [...prevCart, { ...productToAdd }]);
       }
     },
     [cart],

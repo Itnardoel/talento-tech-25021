@@ -1,22 +1,23 @@
 import { useState, type MouseEvent } from "react";
-import { useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 
 import { useCart } from "@/hooks/use-cart";
-import type { Product } from "@/types/product-type";
+import { useProduct } from "@/hooks/use-product";
+import { useUser } from "@/hooks/use-user";
 
-interface ProductDetailProps {
-  products: Product[];
-}
-
-export const ProductDetail = ({ products }: ProductDetailProps) => {
+export const ProductDetail = () => {
   const [count, setCount] = useState(1);
 
+  const navigate = useNavigate();
   const { id } = useParams() as { id: string };
 
+  const { user } = useUser();
+  const { products, deleteProduct } = useProduct();
   const { handleAddProduct } = useCart();
 
   const productById = products.find((product) => product.id === id);
+  const isAdmin = user?.includes("ADMIN");
 
   if (!productById)
     return (
@@ -29,7 +30,7 @@ export const ProductDetail = ({ products }: ProductDetailProps) => {
     toast.success(
       `Agregaste ${count.toString()} ${productById.name} al carrito`,
     );
-    handleAddProduct({ productToAdd: productById, count });
+    handleAddProduct({ ...productById, quantity: count });
   };
 
   const handleCountOnClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -39,6 +40,11 @@ export const ProductDetail = ({ products }: ProductDetailProps) => {
     } else if (buttonText === "-") {
       setCount((prevCount) => Math.max(1, prevCount - 1));
     }
+  };
+
+  const handleOnDeleteClick = () => {
+    deleteProduct(productById);
+    navigate("/");
   };
 
   return (
@@ -54,30 +60,51 @@ export const ProductDetail = ({ products }: ProductDetailProps) => {
           <h2 className="text-4xl font-bold">{productById.name}</h2>
           <p>{productById.description}</p>
           <p>$ {productById.price}</p>
-          <div className="flex items-center gap-4 text-xl">
-            <button
-              type="button"
-              onClick={handleCountOnClick}
-              className="size-8 cursor-pointer rounded-lg bg-gray-500 font-bold"
-            >
-              -
-            </button>
-            <span>{count}</span>
-            <button
-              type="button"
-              onClick={handleCountOnClick}
-              className="size-8 cursor-pointer rounded-lg bg-gray-500 font-bold"
-            >
-              +
-            </button>
-          </div>
-          <button
-            type="button"
-            onClick={onAddProduct}
-            className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2 font-bold"
-          >
-            Agregar al carrito
-          </button>
+          {user && !isAdmin && (
+            <>
+              <div className="flex items-center gap-4 text-xl">
+                <button
+                  type="button"
+                  onClick={handleCountOnClick}
+                  className="size-8 cursor-pointer rounded-lg bg-gray-500 font-bold"
+                >
+                  -
+                </button>
+                <span>{count}</span>
+                <button
+                  type="button"
+                  onClick={handleCountOnClick}
+                  className="size-8 cursor-pointer rounded-lg bg-gray-500 font-bold"
+                >
+                  +
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={onAddProduct}
+                className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2 font-bold"
+              >
+                Agregar al carrito
+              </button>
+            </>
+          )}
+          {isAdmin && (
+            <>
+              <Link
+                to={`/admin/${id}`}
+                className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2 text-center font-bold"
+              >
+                Editar producto
+              </Link>
+              <button
+                type="button"
+                className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2 font-bold"
+                onClick={handleOnDeleteClick}
+              >
+                Eliminar producto
+              </button>
+            </>
+          )}
         </div>
       </main>
     </>
