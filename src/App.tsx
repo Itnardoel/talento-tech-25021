@@ -19,7 +19,7 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
         </Route>
         <Route element={<ProtectedRoute allowedRole={"ADMIN"} />}>
-          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin/:id?" element={<AdminPage />} />
         </Route>
       </Route>
     </Routes>

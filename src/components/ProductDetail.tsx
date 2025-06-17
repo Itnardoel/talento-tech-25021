@@ -1,19 +1,23 @@
 import { useState, type MouseEvent } from "react";
-import { useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 
 import { useCart } from "@/hooks/use-cart";
 import { useProduct } from "@/hooks/use-product";
+import { useUser } from "@/hooks/use-user";
 
 export const ProductDetail = () => {
   const [count, setCount] = useState(1);
 
+  const navigate = useNavigate();
   const { id } = useParams() as { id: string };
 
-  const { products } = useProduct();
+  const { user } = useUser();
+  const { products, deleteProduct } = useProduct();
   const { handleAddProduct } = useCart();
 
   const productById = products.find((product) => product.id === id);
+  const isAdmin = user?.includes("ADMIN");
 
   if (!productById)
     return (
@@ -38,6 +42,11 @@ export const ProductDetail = () => {
     }
   };
 
+  const handleOnDeleteClick = () => {
+    deleteProduct(productById);
+    navigate("/");
+  };
+
   return (
     <>
       <main className="mx-auto grid max-w-7xl grid-cols-1 content-center gap-4 xl:grid-cols-2">
@@ -51,30 +60,51 @@ export const ProductDetail = () => {
           <h2 className="text-4xl font-bold">{productById.name}</h2>
           <p>{productById.description}</p>
           <p>$ {productById.price}</p>
-          <div className="flex items-center gap-4 text-xl">
-            <button
-              type="button"
-              onClick={handleCountOnClick}
-              className="size-8 cursor-pointer rounded-lg bg-gray-500 font-bold"
-            >
-              -
-            </button>
-            <span>{count}</span>
-            <button
-              type="button"
-              onClick={handleCountOnClick}
-              className="size-8 cursor-pointer rounded-lg bg-gray-500 font-bold"
-            >
-              +
-            </button>
-          </div>
-          <button
-            type="button"
-            onClick={onAddProduct}
-            className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2 font-bold"
-          >
-            Agregar al carrito
-          </button>
+          {user && !isAdmin && (
+            <>
+              <div className="flex items-center gap-4 text-xl">
+                <button
+                  type="button"
+                  onClick={handleCountOnClick}
+                  className="size-8 cursor-pointer rounded-lg bg-gray-500 font-bold"
+                >
+                  -
+                </button>
+                <span>{count}</span>
+                <button
+                  type="button"
+                  onClick={handleCountOnClick}
+                  className="size-8 cursor-pointer rounded-lg bg-gray-500 font-bold"
+                >
+                  +
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={onAddProduct}
+                className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2 font-bold"
+              >
+                Agregar al carrito
+              </button>
+            </>
+          )}
+          {isAdmin && (
+            <>
+              <Link
+                to={`/admin/${id}`}
+                className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2 text-center font-bold"
+              >
+                Editar producto
+              </Link>
+              <button
+                type="button"
+                className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2 font-bold"
+                onClick={handleOnDeleteClick}
+              >
+                Eliminar producto
+              </button>
+            </>
+          )}
         </div>
       </main>
     </>

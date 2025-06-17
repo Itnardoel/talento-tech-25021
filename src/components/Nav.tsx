@@ -1,11 +1,9 @@
-import { Link, useLocation } from "react-router";
+import { NavLink } from "react-router";
 
 import { useCart } from "@/hooks/use-cart";
 import { useUser } from "@/hooks/use-user";
 
 export const Nav = () => {
-  const location = useLocation();
-
   const { user } = useUser();
   const { cart } = useCart();
 
@@ -15,34 +13,37 @@ export const Nav = () => {
     <nav className="bg-gray-600 p-2.5 text-white">
       <ul className="m-0 flex list-none justify-around">
         <li>
-          <Link to="/" className={location.pathname === "/" ? "font-bold" : ""}>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "font-bold" : "")}
+          >
             Inicio
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link
+          <NavLink
             to="/cart"
-            className={location.pathname === "/cart" ? "font-bold" : ""}
+            className={({ isActive }) => (isActive ? "font-bold" : "")}
           >
             Carrito {cart.length === 0 ? "" : cart.length}
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link
+          <NavLink
             to="/user"
-            className={location.pathname === "/user" ? "font-bold" : ""}
+            className={({ isActive }) => (isActive ? "font-bold" : "")}
           >
             Usuario
-          </Link>
+          </NavLink>
         </li>
         {isAdmin && (
           <li>
-            <Link
+            <NavLink
               to="/admin"
-              className={location.pathname === "/admin" ? "font-bold" : ""}
+              className={({ isActive }) => (isActive ? "font-bold" : "")}
             >
               Admin
-            </Link>
+            </NavLink>
           </li>
         )}
       </ul>

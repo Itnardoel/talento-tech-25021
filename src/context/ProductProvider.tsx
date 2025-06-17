@@ -10,7 +10,11 @@ import { toast } from "sonner";
 
 import { ProductContext } from "./product-context";
 
-import type { Product, ProductToAdd } from "@/types/product-type";
+import type {
+  Product,
+  ProductToAdd,
+  ProductToEdit,
+} from "@/types/product-type";
 import { api } from "@/utils/axios-instance";
 
 interface ProductProviderProps {
@@ -40,6 +44,13 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     }
   };
 
+  const getProductById = useCallback(
+    (id: string | undefined) => {
+      return products.find((product) => product.id === id);
+    },
+    [products],
+  );
+
   const addProduct = useCallback(async (product: ProductToAdd) => {
     setLoading(true);
     try {
@@ -49,7 +60,47 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
       getAllProducts();
     } catch (error) {
       if (isAxiosError(error)) {
-        console.error("Error al obtener productos:", error.response);
+        console.error("Error al agregar producto:", error.response);
+        setError(error.message);
+      } else {
+        console.error("Error desconocido", error);
+        setError("Ocurrió un error inesperado.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const editProduct = useCallback(async (product: ProductToEdit) => {
+    setLoading(true);
+    try {
+      await api.put<ProductToEdit>(`/products/${product.id}`, product);
+
+      toast.success(`Se edito ${product.name} con éxito`);
+      getAllProducts();
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.error("Error al editar producto:", error.response);
+        setError(error.message);
+      } else {
+        console.error("Error desconocido", error);
+        setError("Ocurrió un error inesperado.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const deleteProduct = useCallback(async (product: ProductToEdit) => {
+    setLoading(true);
+    try {
+      await api.delete<ProductToEdit>(`/products/${product.id}`);
+
+      toast.success(`Se elimino ${product.name} con éxito`);
+      getAllProducts();
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.error("Error al editar producto:", error.response);
         setError(error.message);
       } else {
         console.error("Error desconocido", error);
@@ -65,8 +116,25 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
   }, []);
 
   const value = useMemo(
-    () => ({ products, loading, error, getAllProducts, addProduct }),
-    [products, error, loading, addProduct],
+    () => ({
+      products,
+      loading,
+      error,
+      getAllProducts,
+      getProductById,
+      addProduct,
+      editProduct,
+      deleteProduct,
+    }),
+    [
+      products,
+      error,
+      loading,
+      addProduct,
+      getProductById,
+      editProduct,
+      deleteProduct,
+    ],
   );
 
   return <ProductContext value={value}>{children}</ProductContext>;
