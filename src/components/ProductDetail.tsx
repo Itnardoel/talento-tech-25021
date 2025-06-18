@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 
 import { useCart } from "@/hooks/use-cart";
+import { useModalConfirm } from "@/hooks/use-modal-confirm";
 import { useProduct } from "@/hooks/use-product";
 import { useUser } from "@/hooks/use-user";
 
@@ -13,8 +14,9 @@ export const ProductDetail = () => {
   const { id } = useParams() as { id: string };
 
   const { user } = useUser();
-  const { products, deleteProduct } = useProduct();
+  const { products, loading, deleteProduct } = useProduct();
   const { handleAddProduct } = useCart();
+  const confirm = useModalConfirm();
 
   const productById = products.find((product) => product.id === id);
   const isAdmin = user?.includes("ADMIN");
@@ -22,7 +24,11 @@ export const ProductDetail = () => {
   if (!productById)
     return (
       <main className="mx-auto grid max-w-7xl content-center">
-        <p className="font-bold text-red-500">{`El producto con el ID ${id.toString()} no existe`}</p>
+        <p className={`font-bold ${loading ? "" : "text-red-500"} `}>
+          {loading
+            ? "Cargando..."
+            : `El producto con el ID ${id.toString()} no existe`}
+        </p>
       </main>
     );
 
@@ -42,9 +48,15 @@ export const ProductDetail = () => {
     }
   };
 
-  const handleOnDeleteClick = () => {
-    deleteProduct(productById);
-    navigate("/");
+  const handleOnDeleteClick = async () => {
+    const confirmed = await confirm({
+      message: "¿Estás seguro de eliminar este ítem?",
+    });
+
+    if (confirmed) {
+      deleteProduct(productById);
+      navigate("/");
+    }
   };
 
   return (
@@ -68,7 +80,7 @@ export const ProductDetail = () => {
                   onClick={handleCountOnClick}
                   className="size-8 cursor-pointer rounded-lg bg-gray-500 font-bold"
                 >
-                  -
+                  <span>-</span>
                 </button>
                 <span>{count}</span>
                 <button
@@ -99,7 +111,7 @@ export const ProductDetail = () => {
               <button
                 type="button"
                 className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2 font-bold"
-                onClick={handleOnDeleteClick}
+                onClick={() => void handleOnDeleteClick()}
               >
                 Eliminar producto
               </button>

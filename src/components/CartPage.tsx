@@ -1,19 +1,40 @@
 import { toast } from "sonner";
 
 import { useCart } from "@/hooks/use-cart";
+import { useModalConfirm } from "@/hooks/use-modal-confirm";
 import { cartReducer } from "@/utils/cart-reducer";
+
+interface onDeleteProductParams {
+  id: string;
+  name: string;
+}
 
 export const CartPage = () => {
   const { cart, handleDeleteProduct, handleClearCart } = useCart();
 
-  const onDeleteProduct = ({ id, name }: { id: string; name: string }) => {
-    toast.error(`${name} fue eliminado del carrito`);
-    handleDeleteProduct(id);
+  const confirm = useModalConfirm();
+
+  const onDeleteProduct = async ({ id, name }: onDeleteProductParams) => {
+    const confirmed = await confirm({
+      message: "¿Estás seguro de eliminar este ítem?",
+    });
+
+    if (confirmed) {
+      toast.error(`${name} fue eliminado del carrito`);
+      handleDeleteProduct(id);
+    }
   };
 
-  const onClearCart = () => {
-    toast.info("Se vació el carrito");
-    handleClearCart();
+  const onClearCart = async () => {
+    const confirmed = await confirm({
+      message: "¿Estás seguro de vaciar el carrito?",
+      confirm: "Vaciar",
+    });
+
+    if (confirmed) {
+      toast.info("Se vació el carrito");
+      handleClearCart();
+    }
   };
 
   return (
@@ -81,7 +102,7 @@ export const CartPage = () => {
             <div className="p-4">
               <button
                 type="button"
-                onClick={onClearCart}
+                onClick={() => void onClearCart()}
                 className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2"
               >
                 Vaciar carrito
