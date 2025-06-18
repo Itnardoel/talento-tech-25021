@@ -15,6 +15,8 @@ export default tseslint.config(
       js.configs.recommended,
       ...tseslint.configs.strictTypeChecked,
       ...tseslint.configs.stylisticTypeChecked,
+      importPlugin.flatConfigs.recommended,
+      importPlugin.flatConfigs.typescript,
     ],
     files: ["**/*.{ts,tsx}"],
     languageOptions: {
@@ -37,7 +39,6 @@ export default tseslint.config(
       "react-refresh": reactRefresh,
       "react-x": reactX,
       "react-dom": reactDom,
-      import: importPlugin,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,

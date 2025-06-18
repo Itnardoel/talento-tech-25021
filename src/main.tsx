@@ -5,10 +5,11 @@ import { Toaster } from "sonner";
 
 import App from "./App.tsx";
 import { CartProvider } from "./context/CartProvider.tsx";
-import "./index.css";
 import { ModalProvider } from "./context/ModalProvider.tsx";
 import { ProductProvider } from "./context/ProductProvider.tsx";
 import { UserProvider } from "./context/UserProvider.tsx";
+
+import "./index.css";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 createRoot(document.getElementById("root")!).render(
