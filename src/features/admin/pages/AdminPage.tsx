@@ -1,6 +1,6 @@
 import { useLocation, useParams } from "react-router";
 
-import { ProductForm } from "@/features/product/components/ProductForm";
+import { AdminProductForm } from "@/features/admin/components/AdminProductForm";
 import { useProduct } from "@/features/product/hooks/use-product";
 
 export const AdminPage = () => {
@@ -16,7 +16,7 @@ export const AdminPage = () => {
 
   return (
     <main className="grid place-content-center">
-      <ProductForm key={location.pathname} productForEdit={productById} />
+      <AdminProductForm key={location.pathname} productForEdit={productById} />
     </main>
   );
 };

@@ -17,7 +17,7 @@ interface ProductFormProps {
   productForEdit?: Product;
 }
 
-export const ProductForm = ({ productForEdit }: ProductFormProps) => {
+export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
   const [product, setProduct] = useState<ProductToAdd | ProductToEdit>({
     name: productForEdit?.name ?? "",
     price: productForEdit?.price ?? "",
