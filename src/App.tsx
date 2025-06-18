@@ -1,12 +1,12 @@
 import { Route, Routes } from "react-router";
 
-import { AdminPage } from "./components/AdminPage";
-import { CartPage } from "./components/CartPage";
-import { MainPage } from "./components/MainPage";
-import { ProductDetail } from "./components/ProductDetail";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { UserPage } from "./components/UserPage";
-import { MainLayout } from "./layout/MainLayout";
+import { AdminPage } from "@/features/admin/pages/AdminPage";
+import { CartPage } from "@/features/cart/pages/CartPage";
+import { ProductDetail } from "@/features/product/components/ProductDetail";
+import { UserPage } from "@/features/user/pages/UserPage";
+import { MainPage } from "@/shared/components/MainPage";
+import ProtectedRoute from "@/shared/components/ProtectedRoute";
+import { MainLayout } from "@/shared/layout/MainLayout";
 
 function App() {
   return (
