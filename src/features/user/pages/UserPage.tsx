@@ -1,13 +1,16 @@
 import { toast } from "sonner";
 
+import { useCart } from "@/features/cart/hooks/use-cart";
 import { LoginForm } from "@/features/user/components/LoginForm";
 import { useUser } from "@/features/user/hooks/use-user";
 
 export const UserPage = () => {
   const { user, handleLogout } = useUser();
+  const { handleClearCart } = useCart();
 
   const handleClick = () => {
     handleLogout();
+    handleClearCart();
     toast.info("Saliste de la cuenta");
   };
 
