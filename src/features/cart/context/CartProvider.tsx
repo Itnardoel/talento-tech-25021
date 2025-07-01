@@ -10,20 +10,32 @@ interface CartProviderProps {
 
 export const CartProvider = ({ children }: CartProviderProps) => {
   const [cart, setCart] = useState<ProductInCart[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openCart = () => {
+    setIsOpen(true);
+    document.body.classList.add("overflow-hidden");
+  };
+
+  const closeCart = () => {
+    setIsOpen(false);
+    document.body.classList.remove("overflow-hidden");
+  };
 
   const handleAddProduct = useCallback(
     (productToAdd: ProductInCart) => {
-      const isInCart = cart.findIndex(
-        (product) => product.id === productToAdd.id,
-      );
+      const index = cart.findIndex((product) => product.id === productToAdd.id);
 
-      if (isInCart !== -1) {
+      if (index !== -1) {
         setCart((prevCart) => {
-          const productToUpdate = prevCart[isInCart];
+          const draftCart = [...prevCart];
+          const updatedProduct = {
+            ...draftCart[index],
+            quantity: draftCart[index].quantity + productToAdd.quantity,
+          };
+          draftCart[index] = updatedProduct;
 
-          productToUpdate.quantity += productToAdd.quantity;
-
-          return prevCart;
+          return draftCart;
         });
       } else {
         setCart((prevCart) => [...prevCart, { ...productToAdd }]);
@@ -40,13 +52,44 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     });
   }, []);
 
+  const handleUpdateQuantity = useCallback(
+    ({
+      id,
+      quantity: nextQuantity,
+    }: Pick<ProductInCart, "id" | "quantity">) => {
+      if (nextQuantity === 0) return;
+
+      setCart((prevCart) => {
+        const index = prevCart.findIndex((product) => product.id === id);
+
+        if (index === -1) return prevCart;
+
+        const draftCart = [...prevCart];
+        const updatedProduct = { ...draftCart[index], quantity: nextQuantity };
+        draftCart[index] = updatedProduct;
+
+        return draftCart;
+      });
+    },
+    [],
+  );
+
   const handleClearCart = () => {
     setCart([]);
   };
 
   const value = useMemo(
-    () => ({ cart, handleAddProduct, handleDeleteProduct, handleClearCart }),
-    [cart, handleAddProduct, handleDeleteProduct],
+    () => ({
+      cart,
+      isOpen,
+      openCart,
+      closeCart,
+      handleAddProduct,
+      handleDeleteProduct,
+      handleUpdateQuantity,
+      handleClearCart,
+    }),
+    [cart, isOpen, handleAddProduct, handleDeleteProduct, handleUpdateQuantity],
   );
 
   return <CartContext value={value}>{children}</CartContext>;

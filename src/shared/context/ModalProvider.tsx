@@ -13,6 +13,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
   const openModal = (content: ReactNode) => {
     setModalContent(content);
   };
+
   const closeModal = () => {
     setModalContent(null);
   };
