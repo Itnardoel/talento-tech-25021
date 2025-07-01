@@ -1,13 +1,24 @@
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 
+import { CartIcon } from "@/features/cart/components/CartIcons";
 import { useCart } from "@/features/cart/hooks/use-cart";
 import { useUser } from "@/features/user/hooks/use-user";
 
 export const Nav = () => {
   const { user } = useUser();
-  const { cart } = useCart();
+  const { cart, openCart } = useCart();
+
+  const navigate = useNavigate();
 
   const isAdmin = user?.includes("ADMIN");
+
+  const onClickCart = () => {
+    if (user) {
+      openCart();
+    } else {
+      navigate("user");
+    }
+  };
 
   return (
     <nav className="bg-gray-600 p-2.5 text-white">
@@ -22,20 +33,28 @@ export const Nav = () => {
         </li>
         <li>
           <NavLink
-            to="/cart"
-            className={({ isActive }) => (isActive ? "font-bold" : "")}
-          >
-            Carrito {cart.length === 0 ? "" : cart.length}
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
             to="/user"
             className={({ isActive }) => (isActive ? "font-bold" : "")}
           >
             Usuario
           </NavLink>
         </li>
+        {!isAdmin && (
+          <li>
+            <button
+              type="button"
+              className="relative flex cursor-pointer items-center"
+              onClick={onClickCart}
+            >
+              <CartIcon />
+              {cart.length > 0 && (
+                <small className="absolute -top-1.5 -right-1.5 z-10 flex size-4.5 items-center justify-center rounded-full bg-sky-500 font-semibold">
+                  {cart.length}
+                </small>
+              )}
+            </button>
+          </li>
+        )}
         {isAdmin && (
           <li>
             <NavLink
