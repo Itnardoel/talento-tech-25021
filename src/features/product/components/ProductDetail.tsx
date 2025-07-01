@@ -2,6 +2,7 @@ import { useState, type MouseEvent } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 
+import { Minus, Plus } from "@/features/cart/components/CartIcons";
 import { useCart } from "@/features/cart/hooks/use-cart";
 import { useProduct } from "@/features/product/hooks/use-product";
 import { useUser } from "@/features/user/hooks/use-user";
@@ -40,10 +41,11 @@ export const ProductDetail = () => {
   };
 
   const handleCountOnClick = (event: MouseEvent<HTMLButtonElement>) => {
-    const buttonText = event.currentTarget.textContent;
-    if (buttonText === "+") {
+    const type = event.currentTarget.getAttribute("datatype");
+
+    if (type === "plus") {
       setCount((prevCount) => prevCount + 1);
-    } else if (buttonText === "-") {
+    } else if (type === "minus") {
       setCount((prevCount) => Math.max(1, prevCount - 1));
     }
   };
@@ -61,6 +63,8 @@ export const ProductDetail = () => {
 
   return (
     <>
+      <title>{`${productById.name} | HardNexus`}</title>
+      <meta name="description" content={productById.description} />
       <main className="mx-auto grid max-w-7xl grid-cols-1 content-center gap-4 xl:grid-cols-2">
         <img
           src={productById.avatar}
@@ -77,18 +81,20 @@ export const ProductDetail = () => {
               <div className="flex items-center gap-4 text-xl">
                 <button
                   type="button"
+                  datatype="minus"
                   onClick={handleCountOnClick}
-                  className="size-8 cursor-pointer rounded-lg bg-gray-500 font-bold"
+                  className="flex size-8 cursor-pointer items-center justify-center rounded-lg bg-gray-500 font-bold"
                 >
-                  <span>-</span>
+                  <Minus className="size-5" />
                 </button>
                 <span>{count}</span>
                 <button
                   type="button"
+                  datatype="plus"
                   onClick={handleCountOnClick}
-                  className="size-8 cursor-pointer rounded-lg bg-gray-500 font-bold"
+                  className="flex size-8 cursor-pointer items-center justify-center rounded-lg bg-gray-500 font-bold"
                 >
-                  +
+                  <Plus className="size-5" />
                 </button>
               </div>
               <button

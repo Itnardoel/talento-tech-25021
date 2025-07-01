@@ -72,7 +72,6 @@ export const CartDrawer = () => {
           </button>
         </header>
 
-        {/* Contenido scrollable */}
         <main className="flex-1 overflow-y-auto">
           {/* Ejemplo de ítems */}
           {cart.length === 0 ? (
@@ -119,7 +118,7 @@ export const CartDrawer = () => {
                         }}
                         className="cursor-pointer rounded p-2 text-gray-400 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-600"
                       >
-                        <Minus className="h-4 w-4" />
+                        <Minus className="size-4" />
                       </button>
                       <span className="min-w-[2rem] text-center text-sm font-medium text-gray-900">
                         {quantity}
@@ -131,7 +130,7 @@ export const CartDrawer = () => {
                         }}
                         className="cursor-pointer rounded p-2 text-gray-400 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-600"
                       >
-                        <Plus className="h-4 w-4" />
+                        <Plus className="size-4" />
                       </button>
                     </div>
                   </div>
@@ -148,7 +147,7 @@ export const CartDrawer = () => {
                       }}
                       className="cursor-pointer rounded p-2 text-red-400 transition-colors duration-200 hover:bg-gray-100 hover:text-red-600"
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="size-4" />
                     </button>
                   </div>
                 </div>
@@ -157,7 +156,6 @@ export const CartDrawer = () => {
           )}
         </main>
 
-        {/* Footer opcional */}
         {cart.length > 0 && (
           <footer className="space-y-4 border-t border-gray-200 p-6">
             <div className="flex items-start justify-between text-lg font-semibold">
