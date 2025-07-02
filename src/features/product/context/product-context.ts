@@ -6,7 +6,7 @@ import type {
   ProductToEdit,
 } from "@/shared/types/product-type";
 
-interface ProductContext {
+interface ProductContextType {
   products: Product[];
   loading: boolean;
   error: string | null;
@@ -17,6 +17,6 @@ interface ProductContext {
   deleteProduct: (product: ProductToEdit) => Promise<void>;
 }
 
-export const ProductContext = createContext<ProductContext | undefined>(
+export const ProductContext = createContext<ProductContextType | undefined>(
   undefined,
 );
