@@ -6,6 +6,7 @@ import { Toaster } from "sonner";
 import App from "@/App.tsx";
 import { CartProvider } from "@/features/cart/context/CartProvider";
 import { ProductProvider } from "@/features/product/context/ProductProvider";
+import { ProductFilterProvider } from "@/features/product-filter/context/ProductFilterProvider";
 import { UserProvider } from "@/features/user/context/UserProvider";
 import { ModalProvider } from "@/shared/context/ModalProvider";
 
@@ -17,12 +18,14 @@ createRoot(document.getElementById("root")!).render(
     <CartProvider>
       <UserProvider>
         <ProductProvider>
-          <ModalProvider>
-            <BrowserRouter>
-              <Toaster richColors />
-              <App />
-            </BrowserRouter>
-          </ModalProvider>
+          <ProductFilterProvider>
+            <ModalProvider>
+              <BrowserRouter>
+                <Toaster richColors />
+                <App />
+              </BrowserRouter>
+            </ModalProvider>
+          </ProductFilterProvider>
         </ProductProvider>
       </UserProvider>
     </CartProvider>
