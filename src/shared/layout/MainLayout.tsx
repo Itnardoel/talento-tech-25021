@@ -7,7 +7,7 @@ import { Header } from "@/shared/components/Header";
 export const MainLayout = () => {
   return (
     <>
-      <div className="relative grid min-h-dvh grid-rows-[auto_1fr_auto] overflow-x-hidden">
+      <div className="relative grid min-h-dvh grid-rows-[auto_1fr_auto]">
         <Header />
         <Outlet />
         <Footer />
