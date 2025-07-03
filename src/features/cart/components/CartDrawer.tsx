@@ -182,7 +182,7 @@ export const CartDrawer = () => {
               onClick={closeCart}
               className="w-full cursor-pointer rounded-full border-2 border-gray-300 py-3 font-semibold text-gray-700 transition-colors duration-200 hover:border-gray-400"
             >
-              Continue Shopping
+              Seguir comprando
             </button>
           </footer>
         )}
