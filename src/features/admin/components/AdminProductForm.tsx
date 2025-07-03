@@ -8,9 +8,11 @@ import type {
 } from "@/shared/types/product-type";
 
 interface Errors {
+  avatar?: string;
+  category?: string;
+  description?: string;
   name?: string;
   price?: string;
-  description?: string;
 }
 
 interface ProductFormProps {
@@ -19,14 +21,18 @@ interface ProductFormProps {
 
 export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
   const [product, setProduct] = useState<ProductToAdd | ProductToEdit>({
+    avatar: productForEdit?.avatar ?? "",
+    category: productForEdit?.category ?? "",
+    description: productForEdit?.description ?? "",
     name: productForEdit?.name ?? "",
     price: productForEdit?.price ?? "",
-    description: productForEdit?.description ?? "",
   });
   const [errors, setErrors] = useState<Errors>({
+    avatar: "",
+    category: "",
+    description: "",
     name: "",
     price: "",
-    description: "",
   });
 
   const { addProduct, editProduct, error, loading } = useProduct();
@@ -38,22 +44,32 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
     setProduct({ ...product, [name]: value });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (validarFormulario() && !productForEdit) {
-      addProduct(product);
+      await addProduct({
+        ...product,
+        createdAt: new Date().toISOString(),
+        editedAt: new Date().toISOString(),
+      });
       setProduct({
+        avatar: "",
+        category: "",
+        description: "",
         name: "",
         price: "",
-        description: "",
       });
       setErrors({});
       return;
     }
 
     if (validarFormulario() && productForEdit) {
-      editProduct({ ...product, id: productForEdit.id });
+      editProduct({
+        ...product,
+        id: productForEdit.id,
+        editedAt: new Date().toISOString(),
+      });
       setErrors({});
       return;
     }
@@ -65,13 +81,32 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
     if (!product.name.trim()) {
       draftErrors.name = "El nombre es obligatorio.";
     }
+
     if (!product.price || Number(product.price) <= 0) {
       draftErrors.price = "El precio debe ser mayor a 0.";
     }
+
     if (!product.description.trim() || product.description.length < 10) {
       draftErrors.description =
         "La descripción debe tener al menos 10 caracteres.";
     }
+
+    if (!product.description.trim() || product.description.length < 10) {
+      draftErrors.description =
+        "La descripción debe tener al menos 10 caracteres.";
+    }
+
+    if (!product.category || product.category.length < 5) {
+      draftErrors.category =
+        "La categoría debe contener al menos 5 caracteres.";
+    }
+
+    try {
+      new URL(product.avatar);
+    } catch {
+      draftErrors.avatar = "La imagen debe ser una URL válida.";
+    }
+
     setErrors(draftErrors);
     return Object.keys(draftErrors).length === 0;
   };
@@ -85,7 +120,10 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
       : "Agregar producto";
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+    <form
+      onSubmit={(event) => void handleSubmit(event)}
+      className="flex flex-col gap-2"
+    >
       <h2 className="text-2xl font-bold">
         {productForEdit ? "Editar Producto" : "Agregar Producto"}
       </h2>
@@ -115,6 +153,18 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
       </label>
 
       <label className="flex flex-col gap-1 rounded-md">
+        Imagen:
+        <input
+          type="text"
+          name="avatar"
+          value={product.avatar}
+          onChange={handleChange}
+          className="border px-2 py-1"
+        />
+        {errors.avatar && <p className="text-red-500">{errors.avatar}</p>}
+      </label>
+
+      <label className="flex flex-col gap-1 rounded-md">
         Descripción:
         <textarea
           name="description"
@@ -125,6 +175,18 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
         {errors.description && (
           <p className="text-red-500">{errors.description}</p>
         )}
+      </label>
+
+      <label className="flex flex-col gap-1 rounded-md">
+        Categoria:
+        <input
+          type="text"
+          name="category"
+          value={product.category}
+          onChange={handleChange}
+          className="border px-2 py-1"
+        />
+        {errors.category && <p className="text-red-500">{errors.category}</p>}
       </label>
 
       <button

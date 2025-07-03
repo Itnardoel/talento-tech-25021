@@ -56,7 +56,7 @@ export const CartDrawer = () => {
 
       {/* Drawer */}
       <aside
-        className={`fixed top-0 right-0 z-40 flex h-dvh w-sm flex-col bg-white text-black shadow-lg transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed top-0 right-0 z-40 flex h-dvh w-full max-w-sm flex-col bg-white text-black shadow-lg transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <header className="flex items-center justify-between border-b border-gray-200 p-6">
           <div className="flex items-center space-x-2">
@@ -73,7 +73,6 @@ export const CartDrawer = () => {
         </header>
 
         <main className="flex-1 overflow-y-auto">
-          {/* Ejemplo de ítems */}
           {cart.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center p-6 text-center">
               <ShoppingBagIcon className="mb-4 h-16 w-16 text-gray-300" />

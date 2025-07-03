@@ -1,5 +1,7 @@
 import { NavLink, useNavigate } from "react-router";
 
+import { PackagePlus, User } from "./Icons";
+
 import { CartIcon } from "@/features/cart/components/CartIcons";
 import { useCart } from "@/features/cart/hooks/use-cart";
 import { useUser } from "@/features/user/hooks/use-user";
@@ -21,34 +23,28 @@ export const Nav = () => {
   };
 
   return (
-    <nav className="bg-gray-600 p-2.5 text-white">
-      <ul className="m-0 flex list-none justify-around">
-        <li>
-          <NavLink
-            to="/"
-            className={({ isActive }) => (isActive ? "font-bold" : "")}
-          >
-            Inicio
-          </NavLink>
-        </li>
+    <nav className="p-2.5 text-white">
+      <ul className="m-0 flex list-none items-center justify-around space-x-4">
         <li>
           <NavLink
             to="/user"
-            className={({ isActive }) => (isActive ? "font-bold" : "")}
+            className={({ isActive }) =>
+              `${isActive ? "text-white" : "text-gray-400"} p-2 transition-colors duration-200 hover:text-gray-500`
+            }
           >
-            Usuario
+            <User />
           </NavLink>
         </li>
         {!isAdmin && (
           <li>
             <button
               type="button"
-              className="relative flex cursor-pointer items-center"
+              className="relative flex cursor-pointer p-2 text-gray-400 transition-colors duration-200 hover:text-gray-500"
               onClick={onClickCart}
             >
               <CartIcon />
               {cart.length > 0 && (
-                <small className="absolute -top-1.5 -right-1.5 z-10 flex size-4.5 items-center justify-center rounded-full bg-sky-500 font-semibold">
+                <small className="absolute -top-1.5 -right-1.5 z-10 flex size-4.5 justify-center rounded-full bg-sky-500 font-semibold">
                   {cart.length}
                 </small>
               )}
@@ -59,9 +55,11 @@ export const Nav = () => {
           <li>
             <NavLink
               to="/admin"
-              className={({ isActive }) => (isActive ? "font-bold" : "")}
+              className={({ isActive }) =>
+                `${isActive ? "text-white" : "text-gray-400"} p-2 transition-colors duration-200 hover:text-gray-500`
+              }
             >
-              Admin
+              <PackagePlus />
             </NavLink>
           </li>
         )}
