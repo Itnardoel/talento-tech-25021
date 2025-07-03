@@ -1,3 +1,5 @@
+import { useNavigate, useSearchParams } from "react-router";
+
 import { useProductFilter } from "../hooks/use-product-filter";
 
 import { Search } from "./SearchIcon";
@@ -8,6 +10,28 @@ interface SearchBarProps {
 
 export const SearchBar = ({ isMobile = false }: SearchBarProps) => {
   const { searchQuery, setSearchQuery } = useProductFilter();
+
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+
+    setSearchParams((prev) => {
+      if (query === "") {
+        prev.delete("search");
+      } else {
+        prev.set("search", query);
+      }
+      return prev;
+    });
+
+    navigate({
+      pathname: "/",
+      search: searchParams.toString(),
+    });
+  };
 
   return (
     <div
@@ -25,9 +49,7 @@ export const SearchBar = ({ isMobile = false }: SearchBarProps) => {
           type="search"
           inputMode="search"
           value={searchQuery}
-          onChange={(event) => {
-            setSearchQuery(event.target.value);
-          }}
+          onChange={handleOnChange}
           className="block w-full rounded-full border border-gray-300 py-2 pr-3 pl-10 text-sm leading-5 text-black placeholder-gray-500 transition-all duration-200 focus:border-transparent focus:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none"
           placeholder="Buscar productos, marcas y más..."
         />

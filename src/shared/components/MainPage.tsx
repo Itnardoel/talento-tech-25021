@@ -24,10 +24,12 @@ export const MainPage = () => {
     <>
       <main className="mx-auto flex w-full max-w-7xl flex-col px-4 py-12 sm:px-6 md:flex-row lg:px-8">
         <CategoryFilter />
-        {loading && <p className="content-center">Cargando productos...</p>}
-        {error && <p className="content-center text-red-500">{error}</p>}
-        <section className="grid flex-1 grid-cols-[repeat(auto-fit,minmax(340px,1fr))] justify-items-center gap-4 p-2 sm:grid-cols-[repeat(auto-fit,minmax(400px,1fr))] sm:p-5">
-          {filteredProducts.length === 0 ? (
+        <section
+          className={`grid flex-auto ${loading || filteredProducts.length === 0 ? "grid-cols-1 place-items-center" : "grid-cols-[repeat(auto-fill,minmax(200px,1fr))] place-content-start"} gap-6 p-2 sm:p-5`}
+        >
+          {loading && <p className="content-center">Cargando productos...</p>}
+          {error && <p className="content-center text-red-500">{error}</p>}
+          {!loading && filteredProducts.length === 0 ? (
             <ProductsNotFound />
           ) : (
             filteredProducts.map((product) => (
