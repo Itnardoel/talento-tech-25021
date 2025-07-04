@@ -1,3 +1,5 @@
+import { Hero } from "./Hero";
+
 import { ProductCard } from "@/features/product/components/ProductCard";
 import { useProduct } from "@/features/product/hooks/use-product";
 import { CategoryFilter } from "@/features/product-filter/components/CategoryFilter";
@@ -22,7 +24,11 @@ export const MainPage = () => {
 
   return (
     <>
-      <main className="mx-auto flex w-full max-w-7xl flex-col px-4 py-12 sm:px-6 md:flex-row lg:px-8">
+      <Hero />
+      <main
+        id="productos"
+        className="mx-auto flex w-full max-w-7xl flex-col px-4 py-12 sm:px-6 md:flex-row lg:px-8"
+      >
         <CategoryFilter />
         <section
           className={`grid flex-auto ${loading || filteredProducts.length === 0 ? "grid-cols-1 place-items-center" : "grid-cols-[repeat(auto-fill,minmax(200px,1fr))] place-content-start"} gap-6 p-2 sm:p-5`}
