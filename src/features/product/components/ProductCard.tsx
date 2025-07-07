@@ -23,7 +23,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <div
+    <article
       className="group flex cursor-pointer flex-col overflow-hidden rounded-lg border bg-white shadow-sm transition-all duration-300 hover:shadow-lg"
       onClick={() => {
         navigate(`/product/${product.id}`);
@@ -58,6 +58,6 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           ${product.price.toLocaleString()}
         </span>
       </div>
-    </div>
+    </article>
   );
 };
