@@ -61,7 +61,7 @@ export const CartDrawer = () => {
         <header className="flex items-center justify-between border-b border-gray-200 p-6">
           <div className="flex items-center space-x-2">
             <ShoppingBagIcon />
-            <h2 className="text-lg font-bold">Tu carrito</h2>
+            <h2 className="text-lg font-bold">{`Tu carrito (${cartReducer(cart, "totalProducts").toString()})`}</h2>
           </div>
           <button
             type="button"
@@ -157,18 +157,15 @@ export const CartDrawer = () => {
 
         {cart.length > 0 && (
           <footer className="space-y-4 border-t border-gray-200 p-6">
-            <div className="flex items-start justify-between text-lg font-semibold">
-              <div>
-                <p>Total: ${cartReducer(cart, "totalPrice")}</p>
-                <p>Productos agregados: {cartReducer(cart, "totalProducts")}</p>
-              </div>
+            <div className="flex items-center justify-between text-lg font-semibold">
+              <p>Total: ${cartReducer(cart, "totalPrice")}</p>
               <button
                 type="button"
                 title="Vaciar carrito"
                 onClick={() => void onClearCart()}
                 className="cursor-pointer self-center rounded p-2 text-red-400 transition-colors duration-200 hover:bg-gray-100 hover:text-red-600"
               >
-                <Trash />
+                <Trash className="size-5" />
               </button>
             </div>
             <button

@@ -2,7 +2,7 @@ import { MessageSquareWarning } from "@/shared/components/Icons";
 
 export const ProductsNotFound = () => {
   return (
-    <div className="place-content-center py-12 text-center">
+    <div className="col-span-full py-12 text-center">
       <div className="mb-4 text-gray-400">
         <MessageSquareWarning className="mx-auto size-12" />
       </div>
