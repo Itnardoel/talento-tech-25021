@@ -1,5 +1,8 @@
 import { Route, Routes } from "react-router";
 
+import { CheckoutPage } from "./features/checkout/pages/CheckoutPage";
+import { ThankYouPage } from "./features/checkout/pages/ThankYouPage";
+
 import { AdminPage } from "@/features/admin/pages/AdminPage";
 import { ProductDetail } from "@/features/product/components/ProductDetail";
 import { UserPage } from "@/features/user/pages/UserPage";
@@ -18,6 +21,8 @@ function App() {
           <Route path="/admin/:id?" element={<AdminPage />} />
         </Route>
       </Route>
+      <Route path="/checkout" element={<CheckoutPage />} />
+      <Route path="/success" element={<ThankYouPage />} />
     </Routes>
   );
 }
