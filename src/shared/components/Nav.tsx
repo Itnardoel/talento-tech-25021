@@ -4,6 +4,7 @@ import { PackagePlus, User } from "./Icons";
 
 import { CartIcon } from "@/features/cart/components/CartIcons";
 import { useCart } from "@/features/cart/hooks/use-cart";
+import { cartReducer } from "@/features/cart/utils/cart-reducer";
 import { useUser } from "@/features/user/hooks/use-user";
 
 export const Nav = () => {
@@ -29,7 +30,7 @@ export const Nav = () => {
           <NavLink
             to="/user"
             className={({ isActive }) =>
-              `${isActive ? "text-white" : "text-gray-400"} p-2 transition-colors duration-200 hover:text-gray-500`
+              `${isActive ? "text-black" : "text-gray-400"} p-2 transition-colors duration-200 hover:text-gray-500`
             }
           >
             <User />
@@ -44,8 +45,8 @@ export const Nav = () => {
             >
               <CartIcon />
               {cart.length > 0 && (
-                <small className="absolute -top-1.5 -right-1.5 z-10 flex size-4.5 justify-center rounded-full bg-sky-500 font-semibold">
-                  {cart.length}
+                <small className="absolute -top-1.5 -right-1.5 z-10 inline-flex size-4.5 animate-pulse items-center justify-center rounded-full bg-sky-500 text-xs font-semibold text-white">
+                  {cartReducer(cart, "totalProducts").toString()}
                 </small>
               )}
             </button>
@@ -56,7 +57,7 @@ export const Nav = () => {
             <NavLink
               to="/admin"
               className={({ isActive }) =>
-                `${isActive ? "text-white" : "text-gray-400"} p-2 transition-colors duration-200 hover:text-gray-500`
+                `${isActive ? "text-black" : "text-gray-400"} p-2 transition-colors duration-200 hover:text-gray-500`
               }
             >
               <PackagePlus />
