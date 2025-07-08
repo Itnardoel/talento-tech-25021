@@ -122,7 +122,7 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
   return (
     <form
       onSubmit={(event) => void handleSubmit(event)}
-      className="flex flex-col gap-2"
+      className="flex w-full max-w-80 flex-col gap-2"
     >
       <h2 className="text-2xl font-bold">
         {productForEdit ? "Editar Producto" : "Agregar Producto"}
@@ -133,9 +133,11 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
         <input
           type="text"
           name="name"
+          inputMode="text"
+          autoComplete="off"
           value={product.name}
           onChange={handleChange}
-          className="border px-2 py-1"
+          className="rounded border px-2 py-1"
         />
         {errors.name && <p className="text-red-500">{errors.name}</p>}
       </label>
@@ -145,9 +147,10 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
         <input
           type="number"
           name="price"
+          inputMode="numeric"
           value={product.price}
           onChange={handleChange}
-          className="border px-2 py-1"
+          className="rounded border px-2 py-1"
         />
         {errors.price && <p className="text-red-500">{errors.price}</p>}
       </label>
@@ -157,9 +160,10 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
         <input
           type="text"
           name="avatar"
+          inputMode="url"
           value={product.avatar}
           onChange={handleChange}
-          className="border px-2 py-1"
+          className="rounded border px-2 py-1"
         />
         {errors.avatar && <p className="text-red-500">{errors.avatar}</p>}
       </label>
@@ -168,9 +172,10 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
         Descripción:
         <textarea
           name="description"
+          inputMode="text"
           value={product.description}
           onChange={handleChange}
-          className="border px-2 py-1"
+          className="rounded border px-2 py-1"
         />
         {errors.description && (
           <p className="text-red-500">{errors.description}</p>
@@ -184,14 +189,14 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
           name="category"
           value={product.category}
           onChange={handleChange}
-          className="border px-2 py-1"
+          className="rounded border px-2 py-1"
         />
         {errors.category && <p className="text-red-500">{errors.category}</p>}
       </label>
 
       <button
         type="submit"
-        className="cursor-pointer rounded-lg bg-gray-500 px-4 py-2"
+        className="mt-2 inline-flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 font-semibold whitespace-nowrap text-white shadow-lg transition-colors hover:bg-blue-600/90 hover:shadow-xl"
       >
         {actionLabel}
       </button>

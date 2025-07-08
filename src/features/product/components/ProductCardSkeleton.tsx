@@ -1,6 +1,6 @@
-export const ProductSkeleton = () => {
+export const ProductCardSkeleton = () => {
   return (
-    <article className="flex min-w-[200px] flex-col overflow-hidden rounded-lg border bg-white shadow-sm">
+    <article className="flex min-w-[200px] flex-col overflow-hidden rounded-lg border border-gray-300 bg-white shadow-sm">
       <div className="relative aspect-square w-full animate-pulse bg-gray-300" />
 
       <div className="flex flex-1 flex-col gap-2 p-4">

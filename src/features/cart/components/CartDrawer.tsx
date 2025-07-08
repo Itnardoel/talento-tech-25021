@@ -112,10 +112,11 @@ export const CartDrawer = () => {
                     <div className="mt-2 flex items-center space-x-2">
                       <button
                         type="button"
+                        disabled={quantity === 1}
                         onClick={() => {
                           handleUpdateQuantity({ id, quantity: quantity - 1 });
                         }}
-                        className="cursor-pointer rounded p-2 text-gray-400 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-600"
+                        className="cursor-pointer rounded p-2 text-gray-400 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-600 disabled:pointer-events-none"
                       >
                         <Minus className="size-4" />
                       </button>

@@ -1,8 +1,8 @@
 import { Hero } from "./Hero";
 
 import { ProductCard } from "@/features/product/components/ProductCard";
+import { ProductCardSkeleton } from "@/features/product/components/ProductCardSkeleton";
 import { ProductPager } from "@/features/product/components/ProductPager";
-import { ProductSkeleton } from "@/features/product/components/ProductSkeleton";
 import { useProduct } from "@/features/product/hooks/use-product";
 import { UseProductPager } from "@/features/product/hooks/use-product-pager";
 import { CategoryFilter } from "@/features/product-filter/components/CategoryFilter";
@@ -33,27 +33,29 @@ export const MainPage = () => {
       <Hero />
       <main
         id="productos"
-        className="mx-auto flex w-full max-w-7xl flex-col px-4 py-12 sm:px-6 md:flex-row lg:px-8"
+        className="mx-auto flex w-full max-w-7xl flex-col px-4 py-12 sm:px-6 md:flex-row lg:px-8 lg:py-24"
       >
         <CategoryFilter />
-        <section className="flex flex-1 flex-col justify-center">
+        <section className="mt-6 flex flex-1 flex-col justify-center">
           <header
-            className={`${loading || productsInPage.length === 0 ? "invisible" : "block"} px-2 sm:px-5`}
+            className={`${loading || productsInPage.length === 0 ? "invisible" : "block"} py-2 sm:px-5`}
           >{`Mostrando ${productsInPage.length.toString()} productos`}</header>
 
           <div
-            className={`grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] place-content-start gap-6 p-2 sm:p-5`}
+            className={`grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] place-content-start gap-6 sm:p-5`}
           >
             {loading &&
               Array.from({ length: 8 }, (_, index) => (
-                <ProductSkeleton key={index} />
+                <ProductCardSkeleton key={index} />
               ))}
 
             {error && (
               <p className="col-span-full text-center text-red-500">{error}</p>
             )}
 
-            {!loading && !error && productsInPage.length === 0 ? (
+            {!(loading || products.length === 0) &&
+            !error &&
+            productsInPage.length === 0 ? (
               <ProductsNotFound />
             ) : (
               productsInPage.map((product) => (

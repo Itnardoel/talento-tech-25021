@@ -38,7 +38,7 @@ export const Hero = () => {
             </button>
 
             {/* Features */}
-            <div className="grid grid-cols-1 gap-6 pt-8 sm:grid-cols-3">
+            <div className="flex flex-col gap-6 pt-8 sm:flex-row">
               <div className="flex items-center space-x-3">
                 <div className="rounded-full bg-blue-100 p-2">
                   <Zap className="size-5 text-blue-600" />
@@ -52,7 +52,7 @@ export const Hero = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center space-x-3 justify-self-center">
+              <div className="flex items-center space-x-3">
                 <div className="rounded-full bg-green-100 p-2">
                   <Shield className="size-5 text-green-600" />
                 </div>
@@ -61,13 +61,15 @@ export const Hero = () => {
                   <p className="text-xs text-gray-600">Protección total</p>
                 </div>
               </div>
-              <div className="flex items-center space-x-3 justify-self-end">
+              <div className="flex items-center space-x-3">
                 <div className="rounded-full bg-purple-100 p-2">
                   <Truck className="size-5 text-purple-600" />
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-gray-900">Envío Gratis</p>
-                  <p className="text-xs text-gray-600">Compras mayores a $99</p>
+                  <p className="text-xs text-gray-600">
+                    Compras mayores a $100
+                  </p>
                 </div>
               </div>
             </div>
@@ -81,7 +83,7 @@ export const Hero = () => {
                 alt="Featured Tech Product"
                 className="h-96 w-full rounded-2xl object-cover shadow-2xl lg:h-[500px]"
               />
-              <div className="absolute -right-4 -bottom-4 rounded-xl border bg-white p-4 shadow-xl">
+              <div className="absolute -right-4 -bottom-4 rounded-xl bg-white p-4 shadow-xl">
                 <div className="flex items-center space-x-2">
                   <div className="h-3 w-3 animate-pulse rounded-full bg-green-500"></div>
                   <span className="text-sm font-semibold text-gray-900">

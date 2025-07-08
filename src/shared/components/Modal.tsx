@@ -32,7 +32,7 @@ export const Modal = ({ children }: ModalProps) => {
       onClick={handleOverlayClick}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/30"
     >
-      <div className="w-full max-w-lg rounded-lg bg-gray-800 p-6 shadow-lg">
+      <div className="w-full max-w-lg rounded-lg bg-gray-50 p-6 shadow-lg">
         {children}
       </div>
     </div>,

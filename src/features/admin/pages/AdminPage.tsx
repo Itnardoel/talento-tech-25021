@@ -17,7 +17,7 @@ export const AdminPage = () => {
   return (
     <>
       <title>Admin dashboard | HardNexus</title>
-      <main className="grid place-content-center">
+      <main className="mx-auto grid w-full max-w-7xl place-items-center">
         <AdminProductForm
           key={location.pathname}
           productForEdit={productById}
