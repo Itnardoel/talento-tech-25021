@@ -63,7 +63,7 @@ export const SearchBar = ({ isMobile = false }: SearchBarProps) => {
           value={searchQuery}
           onChange={handleOnChange}
           className="block w-full rounded-full border border-gray-300 py-2 pr-3 pl-10 text-sm leading-5 text-black placeholder-gray-500 transition-all duration-200 focus:border-transparent focus:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-          placeholder="Buscar productos, marcas y más..."
+          placeholder="Buscar productos"
         />
       </div>
     </div>

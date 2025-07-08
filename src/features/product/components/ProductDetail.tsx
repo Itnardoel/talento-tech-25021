@@ -43,7 +43,7 @@ export const ProductDetail = () => {
         ) : (
           <main className="mx-auto grid max-w-7xl content-center">
             <p className="font-bold text-red-500">
-              El producto con el ID {id.toString()} no existe
+              No se encuentra un producto con el ID {id.toString()}
             </p>
           </main>
         )}
@@ -53,7 +53,7 @@ export const ProductDetail = () => {
 
   const onAddProduct = () => {
     toast.success(
-      `Agregaste ${count.toString()} ${productById.name} al carrito`,
+      `Se agregó ${count.toString()} ${productById.name} al carrito`,
     );
     handleAddProduct({ ...productById, quantity: count });
   };
@@ -124,6 +124,7 @@ export const ProductDetail = () => {
                   <div className="flex items-center rounded border px-0.5">
                     <button
                       type="button"
+                      aria-label="Disminuir cantidad en 1"
                       datatype="minus"
                       disabled={count === 1}
                       onClick={handleCountOnClick}
@@ -139,6 +140,7 @@ export const ProductDetail = () => {
                     </span>
                     <button
                       type="button"
+                      aria-label="Aumentar cantidad en 1"
                       datatype="plus"
                       onClick={handleCountOnClick}
                       className="flex size-9 cursor-pointer items-center justify-center rounded-md px-3 font-bold transition-colors hover:bg-gray-300 disabled:pointer-events-none"
@@ -160,15 +162,15 @@ export const ProductDetail = () => {
             <div className="grid grid-cols-3 gap-4 border-t border-b border-gray-300 py-4">
               <div className="text-center">
                 <Truck className="mx-auto mb-2 text-green-600" />
-                <p className="text-xs text-gray-600">Envio Gratis</p>
+                <p className="text-xs text-gray-600">Envío gratis</p>
               </div>
               <div className="text-center">
                 <Shield className="mx-auto mb-2 text-blue-600" />
-                <p className="text-xs text-gray-600">2 Años de Garantía</p>
+                <p className="text-xs text-gray-600">2 años de garantía</p>
               </div>
               <div className="text-center">
                 <RotateCcw className="mx-auto mb-2 text-orange-600" />
-                <p className="text-xs text-gray-600">Devoluciones en 30 Días</p>
+                <p className="text-xs text-gray-600">Devoluciones en 30 días</p>
               </div>
             </div>
             {isAdmin && (

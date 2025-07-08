@@ -25,7 +25,7 @@ export const UserPage = () => {
             onClick={handleClick}
             className="inline-flex h-10 w-full max-w-80 cursor-pointer items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 font-semibold whitespace-nowrap text-white shadow-lg transition-colors hover:bg-blue-600/90 hover:shadow-xl"
           >
-            Logout
+            Cerrar sesión
           </button>
         ) : (
           <LoginForm />

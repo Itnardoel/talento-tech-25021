@@ -23,11 +23,11 @@ export const LoginForm = () => {
     if (formValues.email === "admin" && formValues.password === "1234") {
       navigate("/");
       handleLogin({ ...formValues, role: "ADMIN" });
-      toast.success("Ingresaste con éxito como Admin");
+      toast.success("Inicio de sesión exitoso como administrador");
     } else if (formValues.email === "user" && formValues.password === "1234") {
       navigate("/");
       handleLogin(formValues);
-      toast.success("Ingresaste con éxito como User");
+      toast.success("Inicio de sesión exitoso");
     } else {
       toast.info("Credenciales incorrectas");
     }
@@ -41,7 +41,7 @@ export const LoginForm = () => {
       <h2 className="text-2xl font-bold">Iniciar sesión</h2>
 
       <label className="flex flex-col gap-2">
-        Email:
+        Email
         <input
           type="text"
           name="email"
@@ -55,7 +55,7 @@ export const LoginForm = () => {
       </label>
 
       <label className="flex flex-col gap-2">
-        Contraseña:
+        Contraseña
         <input
           type="password"
           name="password"

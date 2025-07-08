@@ -29,18 +29,18 @@ export const CartDrawer = () => {
 
   const onDeleteProduct = async ({ id, name }: onDeleteProductParams) => {
     const confirmed = await confirm({
-      message: "¿Estás seguro de eliminar este ítem?",
+      message: "¿Eliminar este ítem?",
     });
 
     if (confirmed) {
-      toast.error(`${name} fue eliminado del carrito`);
+      toast.error(`Se eliminó ${name} del carrito`);
       handleDeleteProduct(id);
     }
   };
 
   const onClearCart = async () => {
     const confirmed = await confirm({
-      message: "¿Estás seguro de vaciar el carrito?",
+      message: "¿Vaciar el carrito?",
       confirm: "Vaciar",
     });
 
@@ -69,10 +69,11 @@ export const CartDrawer = () => {
         <div className="flex items-center justify-between border-b border-gray-200 p-6">
           <div className="flex items-center space-x-2">
             <ShoppingBagIcon />
-            <h2 className="text-lg font-bold">{`Tu carrito (${cartReducer(cart, "totalProducts").toString()})`}</h2>
+            <h2 className="text-lg font-bold">{`Carrito (${cartReducer(cart, "totalProducts").toString()})`}</h2>
           </div>
           <button
             type="button"
+            aria-label="Cerrar el carrito"
             onClick={closeCart}
             className="cursor-pointer rounded p-2 text-gray-400 transition-colors duration-200 hover:bg-gray-100 hover:text-gray-500"
           >
@@ -85,10 +86,10 @@ export const CartDrawer = () => {
             <div className="flex h-full flex-col items-center justify-center p-6 text-center">
               <ShoppingBagIcon className="mb-4 h-16 w-16 text-gray-300" />
               <h3 className="mb-2 text-lg font-medium text-gray-900">
-                Tu carrito esta vacio
+                El carrito está vacío
               </h3>
               <p className="mb-6 text-gray-500">
-                ¡Agrega algunos productos para comenzar!
+                ¡Agregá algunos productos para comenzar!
               </p>
               <button
                 type="button"
@@ -120,6 +121,7 @@ export const CartDrawer = () => {
                     <div className="mt-2 flex items-center space-x-2">
                       <button
                         type="button"
+                        aria-label="Disminuir cantidad en 1"
                         disabled={quantity === 1}
                         onClick={() => {
                           handleUpdateQuantity({ id, quantity: quantity - 1 });
@@ -133,6 +135,7 @@ export const CartDrawer = () => {
                       </span>
                       <button
                         type="button"
+                        aria-label="Aumentar cantidad en 1"
                         onClick={() => {
                           handleUpdateQuantity({ id, quantity: quantity + 1 });
                         }}
@@ -149,6 +152,7 @@ export const CartDrawer = () => {
                     </span>
                     <button
                       type="button"
+                      aria-label="Eliminar producto"
                       title="Eliminar producto"
                       onClick={() => {
                         onDeleteProduct({ id, name });
@@ -170,6 +174,7 @@ export const CartDrawer = () => {
               <p>Total: ${cartReducer(cart, "totalPrice")}</p>
               <button
                 type="button"
+                aria-label="Vaciar el carrito"
                 title="Vaciar carrito"
                 onClick={() => void onClearCart()}
                 className="cursor-pointer self-center rounded p-2 text-red-400 transition-colors duration-200 hover:bg-gray-100 hover:text-red-600"

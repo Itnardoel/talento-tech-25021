@@ -125,11 +125,11 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
       className="flex w-full max-w-80 flex-col gap-2"
     >
       <h2 className="text-2xl font-bold">
-        {productForEdit ? "Editar Producto" : "Agregar Producto"}
+        {productForEdit ? "Editar producto" : "Agregar producto"}
       </h2>
 
       <label className="flex flex-col gap-1 rounded-md">
-        Nombre:
+        Nombre
         <input
           type="text"
           name="name"
@@ -143,7 +143,7 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
       </label>
 
       <label className="flex flex-col gap-1 rounded-md">
-        Precio:
+        Precio
         <input
           type="number"
           name="price"
@@ -156,7 +156,7 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
       </label>
 
       <label className="flex flex-col gap-1 rounded-md">
-        Imagen:
+        Imagen
         <input
           type="text"
           name="avatar"
@@ -169,7 +169,7 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
       </label>
 
       <label className="flex flex-col gap-1 rounded-md">
-        Descripción:
+        Descripción
         <textarea
           name="description"
           inputMode="text"
@@ -183,7 +183,7 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
       </label>
 
       <label className="flex flex-col gap-1 rounded-md">
-        Categoria:
+        Categoría
         <input
           type="text"
           name="category"

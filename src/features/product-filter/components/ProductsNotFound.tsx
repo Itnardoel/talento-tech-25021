@@ -10,7 +10,7 @@ export const ProductsNotFound = () => {
         No se encontraron productos
       </h3>
       <p className="text-gray-500">
-        Intenta ajustar tus criterios de búsqueda o filtros.
+        Ajustá los criterios de búsqueda o filtros para ver resultados.
       </p>
     </div>
   );

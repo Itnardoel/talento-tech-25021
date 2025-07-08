@@ -33,7 +33,7 @@ export const Hero = () => {
               onClick={scrollToSection}
               className="group flex transform cursor-pointer items-center justify-center space-x-2 rounded-full bg-blue-600 px-8 py-4 font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:bg-blue-700 hover:shadow-xl"
             >
-              <span>Comprar Ahora</span>
+              <span>Comprar ahora</span>
               <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
 

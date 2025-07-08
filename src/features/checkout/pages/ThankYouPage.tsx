@@ -27,18 +27,18 @@ export const ThankYouPage = () => {
           <Check className="size-16 text-green-500" />
         </div>
 
-        <h1 className="text-2xl font-bold text-green-600">¡Compra exitosa!</h1>
+        <h1 className="text-2xl font-bold text-green-600">
+          Compra realizada con éxito
+        </h1>
 
-        <p className="text-gray-700">
-          Tu pedido ha sido confirmado con el número:
-        </p>
+        <p className="text-gray-700">Pedido confirmado con el número:</p>
 
         <p className="font-mono text-lg font-semibold text-blue-600">
           {orderId}
         </p>
 
         <p className="text-sm text-gray-500">
-          Te enviaremos una confirmación a tu correo en breve.
+          Se enviará una confirmación al correo electrónico en breve.
         </p>
 
         <button
@@ -46,7 +46,7 @@ export const ThankYouPage = () => {
           onClick={handleSuccessButton}
           className="mt-4 w-full cursor-pointer rounded bg-blue-600 py-3 font-semibold text-white transition-all hover:bg-blue-700"
         >
-          Volver al inicio
+          Ir al inicio
         </button>
       </div>
     </div>

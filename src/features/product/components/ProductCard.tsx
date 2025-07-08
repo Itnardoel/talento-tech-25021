@@ -19,7 +19,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const onAddProduct = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     handleAddProduct({ ...product, quantity: 1 });
-    toast.success(`Agregaste 1 ${product.name} al carrito`);
+    toast.success(`Se agregó 1 ${product.name} al carrito`);
   };
 
   return (

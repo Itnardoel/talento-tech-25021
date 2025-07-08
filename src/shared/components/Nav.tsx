@@ -29,6 +29,7 @@ export const Nav = () => {
         <li>
           <NavLink
             to="/user"
+            aria-label="Ir a panel de usuario"
             className={({ isActive }) =>
               `${isActive ? "text-black" : "text-gray-400"} p-2 transition-colors duration-200 hover:text-gray-500`
             }
@@ -40,6 +41,7 @@ export const Nav = () => {
           <li>
             <button
               type="button"
+              aria-label="Abrir carrito"
               className="relative flex cursor-pointer p-2 text-gray-400 transition-colors duration-200 hover:text-gray-500"
               onClick={onClickCart}
             >
@@ -56,6 +58,7 @@ export const Nav = () => {
           <li>
             <NavLink
               to="/admin"
+              aria-label="Ir a panel de administrador"
               className={({ isActive }) =>
                 `${isActive ? "text-black" : "text-gray-400"} p-2 transition-colors duration-200 hover:text-gray-500`
               }
