@@ -38,7 +38,7 @@ export const Hero = () => {
             </button>
 
             {/* Features */}
-            <div className="grid grid-cols-1 gap-6 pt-8 sm:grid-cols-3">
+            <div className="flex flex-col gap-6 pt-8 sm:flex-row">
               <div className="flex items-center space-x-3">
                 <div className="rounded-full bg-blue-100 p-2">
                   <Zap className="size-5 text-blue-600" />
@@ -67,7 +67,9 @@ export const Hero = () => {
                 </div>
                 <div className="flex-1">
                   <p className="font-semibold text-gray-900">Envío Gratis</p>
-                  <p className="text-xs text-gray-600">Compras mayores a $99</p>
+                  <p className="text-xs text-gray-600">
+                    Compras mayores a $100
+                  </p>
                 </div>
               </div>
             </div>
