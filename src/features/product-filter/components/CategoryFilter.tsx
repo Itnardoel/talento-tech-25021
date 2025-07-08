@@ -19,6 +19,8 @@ export const CategoryFilter = () => {
       } else {
         prev.set("category", category);
       }
+
+      prev.set("page", "1");
       return prev;
     });
 

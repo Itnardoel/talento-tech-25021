@@ -33,6 +33,8 @@ export const SearchBar = ({ isMobile = false }: SearchBarProps) => {
       } else {
         prev.set("search", query);
       }
+
+      prev.set("page", "1");
       return prev;
     });
 
