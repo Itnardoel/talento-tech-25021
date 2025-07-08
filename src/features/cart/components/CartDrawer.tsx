@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import { toast } from "sonner";
 
 import { useCart } from "../hooks/use-cart";
@@ -21,6 +22,8 @@ export const CartDrawer = () => {
     handleClearCart,
     handleUpdateQuantity,
   } = useCart();
+
+  const navigate = useNavigate();
 
   const confirm = useModalConfirm();
 
@@ -47,6 +50,11 @@ export const CartDrawer = () => {
     }
   };
 
+  const goToCheckout = () => {
+    closeCart();
+    navigate("/checkout");
+  };
+
   return (
     <>
       {/* Overlay */}
@@ -58,7 +66,7 @@ export const CartDrawer = () => {
       <aside
         className={`fixed top-0 right-0 z-40 flex h-dvh w-full max-w-sm flex-col bg-white text-black shadow-lg transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"}`}
       >
-        <header className="flex items-center justify-between border-b border-gray-200 p-6">
+        <div className="flex items-center justify-between border-b border-gray-200 p-6">
           <div className="flex items-center space-x-2">
             <ShoppingBagIcon />
             <h2 className="text-lg font-bold">{`Tu carrito (${cartReducer(cart, "totalProducts").toString()})`}</h2>
@@ -70,9 +78,9 @@ export const CartDrawer = () => {
           >
             <X />
           </button>
-        </header>
+        </div>
 
-        <main className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto">
           {cart.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center p-6 text-center">
               <ShoppingBagIcon className="mb-4 h-16 w-16 text-gray-300" />
@@ -154,7 +162,7 @@ export const CartDrawer = () => {
               ))}
             </div>
           )}
-        </main>
+        </div>
 
         {cart.length > 0 && (
           <footer className="space-y-4 border-t border-gray-200 p-6">
@@ -171,6 +179,7 @@ export const CartDrawer = () => {
             </div>
             <button
               type="button"
+              onClick={goToCheckout}
               className="w-full transform cursor-pointer rounded-full bg-blue-600 py-4 font-semibold text-white shadow-lg transition-all duration-200 hover:scale-105 hover:bg-blue-700 hover:shadow-xl"
             >
               Finalizar compra
