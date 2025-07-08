@@ -14,9 +14,18 @@ export const SearchBar = ({ isMobile = false }: SearchBarProps) => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const scrollToSection = () => {
+    const $element = document.getElementById("productos");
+    if ($element) {
+      $element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
     setSearchQuery(query);
+
+    scrollToSection();
 
     setSearchParams((prev) => {
       if (query === "") {
@@ -47,6 +56,7 @@ export const SearchBar = ({ isMobile = false }: SearchBarProps) => {
         </div>
         <input
           type="search"
+          name="search"
           inputMode="search"
           value={searchQuery}
           onChange={handleOnChange}
