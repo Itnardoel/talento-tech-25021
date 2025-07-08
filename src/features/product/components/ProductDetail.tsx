@@ -85,12 +85,13 @@ export const ProductDetail = () => {
       <meta name="description" content={productById.description} />
 
       <main className="mx-auto mt-4 grid w-full max-w-7xl content-center sm:mt-0">
-        <Link
-          to={{ pathname: "/", hash: "productos" }}
-          className="flex items-center gap-1 px-6 text-lg font-semibold text-gray-500"
+        <button
+          type="button"
+          onClick={() => void navigate(-1)}
+          className="flex cursor-pointer items-center gap-1 px-6 text-lg font-semibold text-gray-500"
         >
           <ArrowRight className="rotate-180" /> Volver
-        </Link>
+        </button>
         <div className="grid gap-8 p-6 md:grid-cols-2">
           <img
             src={productById.avatar}

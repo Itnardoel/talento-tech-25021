@@ -1,6 +1,3 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router";
-
 import { Hero } from "./Hero";
 
 import { ProductCard } from "@/features/product/components/ProductCard";
@@ -16,8 +13,6 @@ export const MainPage = () => {
   const { error, loading, products } = useProduct();
   const { debouncedSearchQuery, selectedCategory } = useProductFilter();
 
-  const location = useLocation();
-
   const filteredProducts = products.filter((product) => {
     const matchName = product.name
       .toLowerCase()
@@ -32,15 +27,6 @@ export const MainPage = () => {
 
   const { productsInPage, changePage, page, totalPages } =
     UseProductPager(filteredProducts);
-
-  useEffect(() => {
-    if (location.hash) {
-      const element = document.getElementById(location.hash.replace("#", ""));
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }
-  }, [location.hash]);
 
   return (
     <>
