@@ -24,7 +24,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <article
-      className="group flex cursor-pointer flex-col overflow-hidden rounded-lg border bg-white shadow-sm transition-all duration-300 hover:shadow-lg"
+      className="group flex cursor-pointer flex-col overflow-hidden rounded-lg border border-gray-300 bg-white shadow-sm transition-all duration-300 hover:shadow-lg"
       onClick={() => {
         navigate(`/product/${product.id}`);
       }}
@@ -36,11 +36,11 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           className="aspect-square object-cover transition-transform duration-300 group-hover:scale-105"
         />
 
-        <div className="absolute right-3 bottom-3 left-3 opacity-0 transition-opacity group-hover:opacity-100">
+        <div className="absolute right-3 bottom-3 left-3 hidden opacity-0 transition-opacity group-hover:opacity-100 sm:block">
           <button
             type="button"
             disabled={!user?.includes("USER")}
-            className="inline-flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-black px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors hover:bg-black/90 disabled:pointer-events-none disabled:opacity-50"
+            className="inline-flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 font-semibold whitespace-nowrap text-white shadow-lg transition-colors hover:bg-blue-600/90 hover:shadow-xl disabled:pointer-events-none disabled:opacity-50"
             onClick={onAddProduct}
           >
             <CartIcon className="mr-2 size-4" />
