@@ -19,17 +19,17 @@ export const ModalConfirm = ({
       <div className="flex justify-center gap-4">
         <button
           type="button"
-          className="cursor-pointer rounded-md bg-red-600 px-4 py-2 text-white"
-          onClick={onConfirm}
-        >
-          {confirm ?? "Eliminar"}
-        </button>
-        <button
-          type="button"
-          className="cursor-pointer rounded-md bg-gray-300 px-4 py-2 text-gray-800"
+          className="cursor-pointer rounded-md bg-gray-300 px-4 py-2 text-gray-800 transition-colors hover:bg-gray-200"
           onClick={onCancel}
         >
           {cancel ?? "Cancelar"}
+        </button>
+        <button
+          type="button"
+          className="cursor-pointer rounded-md bg-red-600 px-4 py-2 text-white transition-colors hover:bg-red-700"
+          onClick={onConfirm}
+        >
+          {confirm ?? "Eliminar"}
         </button>
       </div>
     </div>
