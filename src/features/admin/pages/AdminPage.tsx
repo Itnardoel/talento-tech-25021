@@ -1,5 +1,7 @@
 import { useLocation, useParams } from "react-router";
 
+import { AdminProductFormSkeleton } from "../components/AdminProductFormSkeleton";
+
 import { AdminProductForm } from "@/features/admin/components/AdminProductForm";
 import { useProduct } from "@/features/product/hooks/use-product";
 
@@ -10,18 +12,18 @@ export const AdminPage = () => {
   const { getProductById } = useProduct();
   const productById = getProductById(id);
 
-  if (id && !productById) {
-    return <div className="grid place-content-center">Cargando...</div>;
-  }
-
   return (
     <>
       <title>Admin dashboard | HardNexus</title>
       <main className="mx-auto grid w-full max-w-7xl place-items-center">
-        <AdminProductForm
-          key={location.pathname}
-          productForEdit={productById}
-        />
+        {id && !productById ? (
+          <AdminProductFormSkeleton />
+        ) : (
+          <AdminProductForm
+            key={location.pathname}
+            productForEdit={productById}
+          />
+        )}
       </main>
     </>
   );
