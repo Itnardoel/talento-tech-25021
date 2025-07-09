@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 import { useProduct } from "@/features/product/hooks/use-product";
+import { categories } from "@/features/product-filter/const/categories";
 import type {
   Product,
   ProductToAdd,
@@ -34,11 +36,16 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
     name: "",
     price: "",
   });
+  const [loading, setLoading] = useState(false);
 
-  const { addProduct, editProduct, error, loading } = useProduct();
+  const navigate = useNavigate();
+
+  const { addProduct, editProduct, error } = useProduct();
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value } = event.target;
     setProduct({ ...product, [name]: value });
@@ -48,11 +55,13 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
     event.preventDefault();
 
     if (validarFormulario() && !productForEdit) {
+      setLoading(true);
       await addProduct({
         ...product,
         createdAt: new Date().toISOString(),
         editedAt: new Date().toISOString(),
       });
+
       setProduct({
         avatar: "",
         category: "",
@@ -60,17 +69,27 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
         name: "",
         price: "",
       });
+
       setErrors({});
+      setLoading(false);
+
       return;
     }
 
     if (validarFormulario() && productForEdit) {
-      editProduct({
+      setLoading(true);
+
+      await editProduct({
         ...product,
         id: productForEdit.id,
         editedAt: new Date().toISOString(),
       });
+
       setErrors({});
+      setLoading(false);
+
+      navigate(`/product/${productForEdit.id}`);
+
       return;
     }
   };
@@ -96,9 +115,8 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
         "La descripción debe tener al menos 10 caracteres.";
     }
 
-    if (!product.category || product.category.length < 5) {
-      draftErrors.category =
-        "La categoría debe contener al menos 5 caracteres.";
+    if (!product.category) {
+      draftErrors.category = "Se debe elegir una categoría.";
     }
 
     try {
@@ -122,7 +140,7 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
   return (
     <form
       onSubmit={(event) => void handleSubmit(event)}
-      className="flex w-full max-w-80 flex-col gap-2"
+      className="flex w-full max-w-80 flex-col gap-2 py-6 lg:py-0"
     >
       <h2 className="text-2xl font-bold">
         {productForEdit ? "Editar producto" : "Agregar producto"}
@@ -184,13 +202,19 @@ export const AdminProductForm = ({ productForEdit }: ProductFormProps) => {
 
       <label className="flex flex-col gap-1 rounded-md">
         Categoría
-        <input
-          type="text"
+        <select
           name="category"
           value={product.category}
           onChange={handleChange}
           className="rounded border px-2 py-1"
-        />
+        >
+          <option value="">Seleccionar categoría</option>
+          {categories.slice(1).map((category) => (
+            <option key={category.id} value={category.name}>
+              {category.name}
+            </option>
+          ))}
+        </select>
         {errors.category && <p className="text-red-500">{errors.category}</p>}
       </label>
 
