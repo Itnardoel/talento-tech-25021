@@ -1,5 +1,5 @@
 import { useState, type MouseEvent } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useLocation, useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 
 import { ProductDetailSkeleton } from "./ProductDetailSkeleton";
@@ -25,7 +25,14 @@ export const ProductDetail = () => {
   const [count, setCount] = useState(1);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams() as { id: string };
+
+  const { scrollToTop } = location.state as { scrollToTop: boolean };
+
+  if (scrollToTop) {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
 
   const { user } = useUser();
   const { products, loading, deleteProduct } = useProduct();
@@ -84,7 +91,7 @@ export const ProductDetail = () => {
       <title>{`${productById.name} | HardNexus`}</title>
       <meta name="description" content={productById.description} />
 
-      <main className="mx-auto mt-4 grid w-full max-w-7xl content-center sm:mt-0">
+      <main className="mx-auto mt-4 grid w-full max-w-7xl content-center">
         <button
           type="button"
           onClick={() => void navigate(-1)}
