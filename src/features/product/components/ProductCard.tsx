@@ -43,7 +43,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
               className="inline-flex h-10 w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-blue-600 px-4 py-2 font-semibold whitespace-nowrap text-white shadow-lg transition-colors hover:bg-blue-600/90 hover:shadow-xl"
               onClick={onAddProduct}
             >
-              <CartIcon className="mr-2 size-4" />
+              <CartIcon className="size-4" />
               Agregar al carrito
             </button>
           </div>
