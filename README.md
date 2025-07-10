@@ -1,54 +1,63 @@
-# React + TypeScript + Vite
+# Talento Tech 25021
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Descripción del proyecto
 
-Currently, two official plugins are available:
+Este proyecto es una aplicación web desarrollada con React, TypeScript y Vite, orientada a la gestión de productos, carrito de compras y procesos de checkout, simulando una tienda online. Permite a los usuarios explorar productos, filtrarlos por categorías, agregarlos al carrito y completar el proceso de compra. Además, incluye funcionalidades administrativas para la gestión de productos.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Funcionalidades principales
+- Visualización de productos con detalles y paginación.
+- Filtros por categoría, búsqueda y ordenamiento.
+- Carrito de compras persistente y gestionable.
+- Proceso de checkout y página de agradecimiento.
+- Autenticación y gestión de usuario.
+- Panel de administración para productos.
 
-## Expanding the ESLint configuration
+## Instalación
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Clona el repositorio:**
+   ```bash
+   git clone <URL-del-repositorio>
+   cd talento-tech-25021
+   ```
+2. **Instala las dependencias:**
+   ```bash
+   pnpm install
+   # o
+   npm install
+   # o
+   yarn install
+   ```
+3. **Inicia el servidor de desarrollo:**
+   ```bash
+   pnpm dev
+   # o
+   npm run dev
+   # o
+   yarn dev
+   ```
+4. Accede a la aplicación en [http://localhost:5173](http://localhost:5173)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Uso
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Navega por la tienda, filtra productos y agrégalos al carrito.
+- Accede al carrito para revisar o modificar productos seleccionados.
+- Completa el proceso de compra desde el checkout.
+- Si tienes permisos de administrador, gestiona productos desde el panel de administración.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Tecnologías utilizadas
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- [React](https://react.dev/) (con JSX/TSX)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [ESLint](https://eslint.org/) (con reglas recomendadas y soporte para React)
+- [pnpm](https://pnpm.io/) (o npm/yarn)
+
+## Estructura del proyecto
+
+- `src/` — Código fuente principal
+  - `features/` — Módulos por dominio: productos, carrito, checkout, usuario, filtros
+  - `shared/` — Componentes y utilidades compartidas
+  - `assets/` — Recursos estáticos
+- `public/` — Archivos públicos
+- `index.html` — Entrada principal
+- `vite.config.ts` — Configuración de Vite
