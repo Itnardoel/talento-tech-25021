@@ -1,8 +1,8 @@
-import { useNavigate, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 
 import { useProductFilter } from "../hooks/use-product-filter";
 
-import { Search } from "./SearchIcon";
+import { Search } from "./Icons";
 
 interface SearchBarProps {
   isMobile?: boolean;
@@ -11,8 +11,7 @@ interface SearchBarProps {
 export const SearchBar = ({ isMobile = false }: SearchBarProps) => {
   const { searchQuery, setSearchQuery } = useProductFilter();
 
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [, setSearchParams] = useSearchParams();
 
   const scrollToSection = () => {
     const $element = document.getElementById("productos");
@@ -27,20 +26,15 @@ export const SearchBar = ({ isMobile = false }: SearchBarProps) => {
 
     scrollToSection();
 
-    setSearchParams((prev) => {
+    setSearchParams((prevURLSearchParams) => {
       if (query === "") {
-        prev.delete("search");
+        prevURLSearchParams.delete("search");
       } else {
-        prev.set("search", query);
+        prevURLSearchParams.set("search", query);
       }
 
-      prev.set("page", "1");
-      return prev;
-    });
-
-    navigate({
-      pathname: "/",
-      search: searchParams.toString(),
+      prevURLSearchParams.set("page", "1");
+      return prevURLSearchParams;
     });
   };
 

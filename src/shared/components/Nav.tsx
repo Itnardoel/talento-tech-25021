@@ -1,15 +1,18 @@
 import { NavLink, useNavigate } from "react-router";
 
-import { PackagePlus, User } from "./Icons";
+import { Funnel, PackagePlus, User } from "./Icons";
 
 import { CartIcon } from "@/features/cart/components/CartIcons";
 import { useCart } from "@/features/cart/hooks/use-cart";
 import { cartReducer } from "@/features/cart/utils/cart-reducer";
+import { useProductFilter } from "@/features/product-filter/hooks/use-product-filter";
 import { useUser } from "@/features/user/hooks/use-user";
 
 export const Nav = () => {
   const { user } = useUser();
   const { cart, openCart } = useCart();
+  const { isCategoryFilterDrawerOpen, setIsCategoryFilterDrawerOpen } =
+    useProductFilter();
 
   const navigate = useNavigate();
 
@@ -23,9 +26,23 @@ export const Nav = () => {
     }
   };
 
+  const onClickFunnel = () => {
+    document.body.classList.add("overflow-hidden");
+    setIsCategoryFilterDrawerOpen(!isCategoryFilterDrawerOpen);
+  };
+
   return (
     <nav className="p-2.5 text-white">
       <ul className="m-0 flex list-none items-center justify-around space-x-4">
+        <li className="md:hidden">
+          <button
+            type="button"
+            onClick={onClickFunnel}
+            className="cursor-pointer p-2 text-gray-400 transition-colors duration-200 hover:text-gray-500"
+          >
+            <Funnel />
+          </button>
+        </li>
         <li>
           <NavLink
             to="/user"

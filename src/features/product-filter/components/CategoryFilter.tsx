@@ -1,34 +1,43 @@
-import { useNavigate, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 
 import { categories } from "../const/categories";
 import { useProductFilter } from "../hooks/use-product-filter";
 
-import { Search } from "./SearchIcon";
-export const CategoryFilter = () => {
-  const { selectedCategory, setSelectedCategory } = useProductFilter();
+import type { Product } from "@/shared/types/product-type";
 
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+interface CategoryFilterProps {
+  products: Product[];
+  isMobile?: boolean;
+}
+
+export const CategoryFilter = ({ products, isMobile }: CategoryFilterProps) => {
+  const {
+    selectedCategory,
+    setSelectedCategory,
+    setIsCategoryFilterDrawerOpen,
+  } = useProductFilter();
+
+  const [, setSearchParams] = useSearchParams();
 
   const handleOnClick = (category: string) => {
     setSelectedCategory(category);
 
-    setSearchParams((prev) => {
+    setSearchParams((prevURLSearchParams) => {
       if (category === "") {
-        prev.delete("category");
+        prevURLSearchParams.delete("category");
       } else {
-        prev.set("category", category);
+        prevURLSearchParams.set("category", category);
       }
 
-      prev.set("page", "1");
-      return prev;
+      prevURLSearchParams.set("page", "1");
+      return prevURLSearchParams;
     });
-
-    navigate({ pathname: "/", search: searchParams.toString() });
   };
 
   return (
-    <aside className="h-fit rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+    <aside
+      className={`h-fit bg-white p-6 ${isMobile ? "overflow-y-auto" : "hidden rounded-xl border border-gray-200 shadow-sm md:block"}`}
+    >
       <h3 className="mb-4 text-lg font-semibold text-gray-900">Categorias</h3>
       <div className="space-y-2">
         {categories.map((category) => (
@@ -37,18 +46,34 @@ export const CategoryFilter = () => {
             key={category.id}
             onClick={() => {
               handleOnClick(category.id);
+              if (isMobile) {
+                setIsCategoryFilterDrawerOpen(false);
+                document.body.classList.remove("overflow-hidden");
+              }
             }}
-            className={`flex w-full cursor-pointer items-center justify-between rounded-lg p-3 transition-all duration-200 ${
+            className={`flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg p-3 transition-all duration-200 ${
               selectedCategory === category.id
                 ? "border border-blue-200 bg-blue-50 text-blue-700"
                 : "border border-transparent text-gray-700 hover:bg-gray-50"
             }`}
           >
             <div className="flex items-center space-x-3">
-              {/* {IconComponent && <IconComponent className="h-5 w-5" />} TODO: Elegir iconos en base a categorias */}
-              <Search />
+              {category.icon}
               <span className="font-medium">{category.name}</span>
             </div>
+            <span
+              className={`inline-flex w-7 items-center justify-center rounded-full px-2 py-1 text-sm ${
+                selectedCategory === category.id
+                  ? "bg-blue-100 text-blue-700"
+                  : "bg-gray-100 text-gray-600"
+              }`}
+            >
+              {category.name === "Todos"
+                ? products.length
+                : products.filter(
+                    (product) => product.category === category.name,
+                  ).length}
+            </span>
           </button>
         ))}
       </div>

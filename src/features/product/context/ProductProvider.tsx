@@ -56,7 +56,7 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     try {
       await api.post<ProductToAdd>("/products", product);
 
-      toast.success(`Se agrego ${product.name} con éxito`);
+      toast.success(`Se agregó ${product.name} con éxito`);
       getAllProducts();
     } catch (error) {
       if (isAxiosError(error)) {
@@ -76,7 +76,7 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     try {
       await api.put<ProductToEdit>(`/products/${product.id}`, product);
 
-      toast.success(`Se edito ${product.name} con éxito`);
+      toast.success(`Se editó ${product.name} con éxito`);
       getAllProducts();
     } catch (error) {
       if (isAxiosError(error)) {
@@ -96,7 +96,7 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     try {
       await api.delete<ProductToEdit>(`/products/${product.id}`);
 
-      toast.success(`Se elimino ${product.name} con éxito`);
+      toast.success(`Se eliminó ${product.name} con éxito`);
       getAllProducts();
     } catch (error) {
       if (isAxiosError(error)) {
