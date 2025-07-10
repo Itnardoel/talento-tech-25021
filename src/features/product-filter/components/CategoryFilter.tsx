@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 
 import { categories } from "../const/categories";
 import { useProductFilter } from "../hooks/use-product-filter";
@@ -17,7 +17,9 @@ export const CategoryFilter = ({ products, isMobile }: CategoryFilterProps) => {
     setIsCategoryFilterDrawerOpen,
   } = useProductFilter();
 
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const navigate = useNavigate();
 
   const handleOnClick = (category: string) => {
     setSelectedCategory(category);
@@ -32,6 +34,13 @@ export const CategoryFilter = ({ products, isMobile }: CategoryFilterProps) => {
       prevURLSearchParams.set("page", "1");
       return prevURLSearchParams;
     });
+  };
+
+  const scrollToSection = () => {
+    const $element = document.getElementById("productos");
+    if ($element) {
+      $element.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -49,6 +58,12 @@ export const CategoryFilter = ({ products, isMobile }: CategoryFilterProps) => {
               if (isMobile) {
                 setIsCategoryFilterDrawerOpen(false);
                 document.body.classList.remove("overflow-hidden");
+                scrollToSection();
+                navigate({
+                  pathname: "/",
+                  search: searchParams.toString(),
+                  hash: "productos",
+                });
               }
             }}
             className={`flex w-full cursor-pointer items-center justify-between gap-2 rounded-lg p-3 transition-all duration-200 ${
