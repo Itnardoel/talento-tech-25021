@@ -128,9 +128,7 @@ export const ProductDetail = () => {
             {user && !isAdmin && (
               <div className="space-y-4">
                 <div className="flex items-center space-x-4">
-                  <label htmlFor="count" className="text-sm font-medium">
-                    Cantidad:
-                  </label>
+                  <p className="text-sm font-medium">Cantidad:</p>
                   <div className="flex items-center rounded border px-0.5">
                     <button
                       type="button"

@@ -45,7 +45,9 @@ export const SearchBar = ({ isMobile = false }: SearchBarProps) => {
   };
 
   useEffect(() => {
-    scrollToSection();
+    if (debouncedSearchQuery !== "") {
+      scrollToSection();
+    }
   }, [debouncedSearchQuery]);
 
   return (
