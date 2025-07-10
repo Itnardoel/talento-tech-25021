@@ -1,4 +1,4 @@
-import { useState, type MouseEvent } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
 
@@ -31,10 +31,6 @@ export const ProductDetail = () => {
   const { scrollToTop } =
     (location.state as { scrollToTop?: boolean } | null) ?? {};
 
-  if (scrollToTop) {
-    window.scrollTo({ top: 0, behavior: "instant" });
-  }
-
   const { user } = useUser();
   const { products, loading, deleteProduct } = useProduct();
   const { handleAddProduct } = useCart();
@@ -42,6 +38,12 @@ export const ProductDetail = () => {
 
   const productById = products.find((product) => product.id === id);
   const isAdmin = user?.includes("ADMIN");
+
+  useEffect(() => {
+    if (scrollToTop) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }, [scrollToTop]);
 
   if (!productById) {
     return (
