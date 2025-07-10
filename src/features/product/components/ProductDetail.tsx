@@ -28,7 +28,8 @@ export const ProductDetail = () => {
   const location = useLocation();
   const { id } = useParams() as { id: string };
 
-  const { scrollToTop } = location.state as { scrollToTop: boolean };
+  const { scrollToTop } =
+    (location.state as { scrollToTop?: boolean } | null) ?? {};
 
   if (scrollToTop) {
     window.scrollTo({ top: 0, behavior: "instant" });
