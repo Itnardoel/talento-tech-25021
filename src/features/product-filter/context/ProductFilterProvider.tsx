@@ -17,20 +17,39 @@ export const ProductFilterProvider = ({
   const [searchQuery, setSearchQuery] = useState(
     searchParams.get("search") ?? "",
   );
+
   const debouncedSearchQuery = UseDebounce(searchQuery);
+
   const [selectedCategory, setSelectedCategory] = useState(
     searchParams.get("category") ?? "",
   );
+
+  const [selectedSort, setSelectedSort] = useState(
+    searchParams.get("sort") ?? "",
+  );
+
+  const [isCategoryFilterDrawerOpen, setIsCategoryFilterDrawerOpen] =
+    useState(false);
 
   const value = useMemo(
     () => ({
       searchQuery,
       debouncedSearchQuery,
       selectedCategory,
+      selectedSort,
+      isCategoryFilterDrawerOpen,
       setSearchQuery,
       setSelectedCategory,
+      setSelectedSort,
+      setIsCategoryFilterDrawerOpen,
     }),
-    [searchQuery, debouncedSearchQuery, selectedCategory],
+    [
+      searchQuery,
+      debouncedSearchQuery,
+      selectedCategory,
+      selectedSort,
+      isCategoryFilterDrawerOpen,
+    ],
   );
 
   return <ProductFilterContext value={value}>{children}</ProductFilterContext>;
