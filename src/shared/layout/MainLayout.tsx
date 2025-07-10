@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 
 import { CartDrawer } from "@/features/cart/components/CartDrawer";
+import { CategoryFilterDrawer } from "@/features/product-filter/components/CategoryFilterDrawer";
 import { Footer } from "@/shared/components/Footer";
 import { Header } from "@/shared/components/Header";
 
@@ -13,6 +14,7 @@ export const MainLayout = () => {
         <Footer />
       </div>
       <CartDrawer />
+      <CategoryFilterDrawer />
     </>
   );
 };
