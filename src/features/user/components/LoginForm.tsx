@@ -20,11 +20,17 @@ export const LoginForm = () => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (formValues.email === "admin" && formValues.password === "1234") {
+    if (
+      formValues.email === "admin@email.com" &&
+      formValues.password === "12345678"
+    ) {
       navigate("/");
       handleLogin({ ...formValues, role: "ADMIN" });
       toast.success("Inicio de sesión exitoso como administrador");
-    } else if (formValues.email === "user" && formValues.password === "1234") {
+    } else if (
+      formValues.email === "user@email.com" &&
+      formValues.password === "12345678"
+    ) {
       navigate("/");
       handleLogin(formValues);
       toast.success("Inicio de sesión exitoso");
