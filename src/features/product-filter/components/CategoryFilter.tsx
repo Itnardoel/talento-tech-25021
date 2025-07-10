@@ -62,7 +62,6 @@ export const CategoryFilter = ({ products, isMobile }: CategoryFilterProps) => {
                 navigate({
                   pathname: "/",
                   search: searchParams.toString(),
-                  hash: "productos",
                 });
               }
             }}
