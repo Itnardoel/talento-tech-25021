@@ -1,65 +1,29 @@
 import { Route, Routes } from "react-router";
-import { MainLayout } from "./layout/MainLayout";
-import { MainPage } from "./components/MainPage";
-import { ProductDetail } from "./components/ProductDetail";
-import { CartPage } from "./components/CartPage";
-import { useEffect, useState } from "react";
-import { isAxiosError } from "axios";
-import { api } from "./utils/axios-instance";
-import type { Product } from "./types/product-type";
-import { UserPage } from "./components/UserPage";
-import { PrivatePage } from "./components/PrivatePage";
-import ProtectedRoute from "./components/ProtectedRoute";
+
+import { CheckoutPage } from "./features/checkout/pages/CheckoutPage";
+import { ThankYouPage } from "./features/checkout/pages/ThankYouPage";
+
+import { AdminPage } from "@/features/admin/pages/AdminPage";
+import { ProductDetail } from "@/features/product/components/ProductDetail";
+import { UserPage } from "@/features/user/pages/UserPage";
+import { MainPage } from "@/shared/components/MainPage";
+import ProtectedRoute from "@/shared/components/ProtectedRoute";
+import { MainLayout } from "@/shared/layout/MainLayout";
 
 function App() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const getAllProducts = async () => {
-      setLoading(true);
-      try {
-        const { data: products } = await api.get<Product[]>("/products");
-        setProducts(products);
-      } catch (error) {
-        if (isAxiosError(error)) {
-          console.error("Error al obtener productos:", error.response);
-          setError(error.message);
-        } else {
-          console.error("Error desconocido", error);
-          setError("Ocurrió un error inesperado.");
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getAllProducts();
-  }, []);
-
   return (
-    <>
-      <Routes>
-        <Route element={<MainLayout />}>
-          <Route
-            path="/"
-            element={
-              <MainPage loading={loading} error={error} products={products} />
-            }
-          />
-          <Route path="/cart" element={<CartPage />} />
-          <Route
-            path="/product/:id"
-            element={<ProductDetail products={products} />}
-          />
-          <Route path="/user" element={<UserPage />} />
-          <Route element={<ProtectedRoute />}>
-            <Route path="/protected" element={<PrivatePage />} />
-          </Route>
+    <Routes>
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/user" element={<UserPage />} />
+        <Route element={<ProtectedRoute allowedRole={"ADMIN"} />}>
+          <Route path="/admin/:id?" element={<AdminPage />} />
         </Route>
-      </Routes>
-    </>
+      </Route>
+      <Route path="/checkout" element={<CheckoutPage />} />
+      <Route path="/success" element={<ThankYouPage />} />
+    </Routes>
   );
 }
 
