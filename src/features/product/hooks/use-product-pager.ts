@@ -9,10 +9,7 @@ export const UseProductPager = (products: Product[]) => {
 
   const totalPages = Math.max(1, Math.ceil(products.length / productPerPage));
 
-  let currentPage = Number(searchParams.get("page")) || 1;
-
-  if (currentPage < 1) currentPage = 1;
-  if (currentPage > totalPages) currentPage = totalPages;
+  const currentPage = Number(searchParams.get("page")) || 1;
 
   const lastIndex = currentPage * productPerPage;
   const firstIndex = lastIndex - productPerPage;
