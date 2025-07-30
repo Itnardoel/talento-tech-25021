@@ -7,7 +7,7 @@ import App from "@/App.tsx";
 import { CartProvider } from "@/features/cart/context/CartProvider";
 import { ProductProvider } from "@/features/product/context/ProductProvider";
 import { ProductFilterProvider } from "@/features/product-filter/context/ProductFilterProvider";
-import { UserProvider } from "@/features/user/context/UserProvider";
+import { Auth0ProviderWithNavigate } from "@/features/user/context/Auth0ProviderWithNavigate";
 import { ModalProvider } from "@/shared/context/ModalProvider";
 
 import "./index.css";
@@ -16,8 +16,8 @@ import "./index.css";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <CartProvider>
-        <UserProvider>
+      <Auth0ProviderWithNavigate>
+        <CartProvider>
           <ProductProvider>
             <ProductFilterProvider>
               <ModalProvider>
@@ -26,8 +26,8 @@ createRoot(document.getElementById("root")!).render(
               </ModalProvider>
             </ProductFilterProvider>
           </ProductProvider>
-        </UserProvider>
-      </CartProvider>
+        </CartProvider>
+      </Auth0ProviderWithNavigate>
     </BrowserRouter>
   </StrictMode>,
 );
