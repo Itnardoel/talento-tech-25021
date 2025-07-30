@@ -18,7 +18,8 @@ export default function AuthDropdown() {
         },
         {
           label: "Cerrar sesión",
-          onClick: () => logout(),
+          onClick: () =>
+            logout({ logoutParams: { returnTo: window.location.origin } }),
         },
       ]
     : [
