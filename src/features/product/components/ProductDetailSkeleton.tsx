@@ -1,8 +1,7 @@
-import { useUser } from "@/features/user/hooks/use-user";
+import { useAuth0User } from "@/features/user/hooks/use-auth0-user";
 
 export const ProductDetailSkeleton = () => {
-  const { user } = useUser();
-  const isAdmin = user?.includes("ADMIN");
+  const { user, isAdmin } = useAuth0User();
 
   return (
     <main className="mx-auto mt-4 grid w-full max-w-7xl animate-pulse content-center sm:mt-0">

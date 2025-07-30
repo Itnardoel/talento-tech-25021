@@ -3,7 +3,7 @@ import { toast } from "sonner";
 
 import { CartIcon } from "@/features/cart/components/CartIcons";
 import { useCart } from "@/features/cart/hooks/use-cart";
-import { useUser } from "@/features/user/hooks/use-user";
+import { useAuth0User } from "@/features/user/hooks/use-auth0-user";
 import type { Product } from "@/shared/types/product-type";
 
 interface ProductCardProps {
@@ -12,7 +12,7 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   const { handleAddProduct } = useCart();
-  const { user } = useUser();
+  const { user, isAdmin } = useAuth0User();
 
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           className="aspect-square object-cover transition-transform duration-300 group-hover:scale-105"
         />
 
-        {user?.includes("USER") && (
+        {user && !isAdmin && (
           <div className="absolute right-3 bottom-3 left-3 hidden opacity-0 transition-opacity group-hover:opacity-100 sm:block">
             <button
               type="button"
