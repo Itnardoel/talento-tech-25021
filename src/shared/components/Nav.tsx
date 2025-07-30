@@ -1,28 +1,25 @@
-import { NavLink, useNavigate } from "react-router";
+import { NavLink } from "react-router";
 
-import { Funnel, PackagePlus, User } from "./Icons";
+import AuthDropdown from "./AuthDropDown";
+import { Funnel, PackagePlus } from "./Icons";
 
 import { CartIcon } from "@/features/cart/components/CartIcons";
 import { useCart } from "@/features/cart/hooks/use-cart";
 import { cartReducer } from "@/features/cart/utils/cart-reducer";
 import { useProductFilter } from "@/features/product-filter/hooks/use-product-filter";
-import { useUser } from "@/features/user/hooks/use-user";
+import { useAuth0User } from "@/features/user/hooks/use-auth0-user";
 
 export const Nav = () => {
-  const { user } = useUser();
+  const { user, isAdmin, login } = useAuth0User();
   const { cart, openCart } = useCart();
   const { isCategoryFilterDrawerOpen, setIsCategoryFilterDrawerOpen } =
     useProductFilter();
-
-  const navigate = useNavigate();
-
-  const isAdmin = user?.includes("ADMIN");
 
   const onClickCart = () => {
     if (user) {
       openCart();
     } else {
-      navigate("user");
+      login();
     }
   };
 
@@ -44,15 +41,7 @@ export const Nav = () => {
           </button>
         </li>
         <li>
-          <NavLink
-            to="/user"
-            aria-label="Ir a panel de usuario"
-            className={({ isActive }) =>
-              `${isActive ? "text-black" : "text-gray-400"} p-2 transition-colors duration-200 hover:text-gray-500`
-            }
-          >
-            <User />
-          </NavLink>
+          <AuthDropdown />
         </li>
         {!isAdmin && (
           <li>
@@ -72,7 +61,7 @@ export const Nav = () => {
           </li>
         )}
         {isAdmin && (
-          <li>
+          <li className="flex size-10">
             <NavLink
               to="/admin"
               aria-label="Ir a panel de administrador"

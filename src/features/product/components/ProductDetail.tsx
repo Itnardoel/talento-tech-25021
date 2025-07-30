@@ -12,7 +12,7 @@ import {
 } from "@/features/cart/components/CartIcons";
 import { useCart } from "@/features/cart/hooks/use-cart";
 import { useProduct } from "@/features/product/hooks/use-product";
-import { useUser } from "@/features/user/hooks/use-user";
+import { useAuth0User } from "@/features/user/hooks/use-auth0-user";
 import {
   ArrowRight,
   RotateCcw,
@@ -31,13 +31,12 @@ export const ProductDetail = () => {
   const { scrollToTop } =
     (location.state as { scrollToTop?: boolean } | null) ?? {};
 
-  const { user } = useUser();
+  const { user, isAdmin } = useAuth0User();
   const { products, loading, deleteProduct } = useProduct();
   const { handleAddProduct } = useCart();
   const confirm = useModalConfirm();
 
   const productById = products.find((product) => product.id === id);
-  const isAdmin = user?.includes("ADMIN");
 
   useEffect(() => {
     if (scrollToTop) {

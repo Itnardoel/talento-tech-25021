@@ -1,19 +1,22 @@
 import { Navigate, Outlet } from "react-router";
 
-import { useUser } from "@/features/user/hooks/use-user";
+import { useAuth0User } from "@/features/user/hooks/use-auth0-user";
 
 interface ProtectedRouteProps {
   allowedRole?: string;
+  fallback: React.ReactNode;
 }
 
-const ProtectedRoute = ({ allowedRole }: ProtectedRouteProps) => {
-  const { user } = useUser();
+const ProtectedRoute = ({ allowedRole, fallback }: ProtectedRouteProps) => {
+  const { user, isAdmin, isLoading } = useAuth0User();
+
+  if (isLoading) return fallback;
 
   if (!user) {
     return <Navigate to="/user" replace />;
   }
 
-  if (allowedRole && !user.includes(allowedRole)) {
+  if (allowedRole && !isAdmin) {
     return <Navigate to="/user" replace />;
   }
 
