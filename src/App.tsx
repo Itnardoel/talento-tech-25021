@@ -1,11 +1,11 @@
 import { Route, Routes } from "react-router";
 
+import { AdminProductFormSkeleton } from "./features/admin/components/AdminProductFormSkeleton";
 import { CheckoutPage } from "./features/checkout/pages/CheckoutPage";
 import { ThankYouPage } from "./features/checkout/pages/ThankYouPage";
 
 import { AdminPage } from "@/features/admin/pages/AdminPage";
 import { ProductDetail } from "@/features/product/components/ProductDetail";
-import { UserPage } from "@/features/user/pages/UserPage";
 import { MainPage } from "@/shared/components/MainPage";
 import ProtectedRoute from "@/shared/components/ProtectedRoute";
 import { MainLayout } from "@/shared/layout/MainLayout";
@@ -16,8 +16,14 @@ function App() {
       <Route element={<MainLayout />}>
         <Route path="/" element={<MainPage />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/user" element={<UserPage />} />
-        <Route element={<ProtectedRoute allowedRole={"ADMIN"} />}>
+        <Route
+          element={
+            <ProtectedRoute
+              allowedRole={"ADMIN"}
+              fallback={<AdminProductFormSkeleton />}
+            />
+          }
+        >
           <Route path="/admin/:id?" element={<AdminPage />} />
         </Route>
       </Route>
