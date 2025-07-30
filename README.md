@@ -11,12 +11,13 @@ Este proyecto es una aplicación web desarrollada con React, TypeScript y Vite, 
 - Proceso de checkout y página de agradecimiento.
 - Autenticación y gestión de usuario.
 - Panel de administración para productos.
+- Autenticación con Auth0 usando OAuth de Google.
 
 ## Instalación
 
 1. **Clona el repositorio:**
    ```bash
-   git clone <URL-del-repositorio>
+   git clone https://github.com/Itnardoel/talento-tech-25021.git
    cd talento-tech-25021
    ```
 2. **Instala las dependencias:**
@@ -27,7 +28,15 @@ Este proyecto es una aplicación web desarrollada con React, TypeScript y Vite, 
    # o
    yarn install
    ```
-3. **Inicia el servidor de desarrollo:**
+3. **Configura las variables de entorno:**
+   Crea un archivo .env en la raíz del proyecto con las siguientes variables:
+   ```bash
+   VITE_MOCKAPI_URL=tu-mockapi-url
+   VITE_AUTH0_DOMAIN=tu-dominio.auth0.com
+   VITE_AUTH0_CLIENT_ID=tu-client-id
+   VITE_AUTH0_REDIRECT_URI=http://localhost:5173
+   ```
+4. **Inicia el servidor de desarrollo:**
    ```bash
    pnpm dev
    # o
@@ -35,7 +44,7 @@ Este proyecto es una aplicación web desarrollada con React, TypeScript y Vite, 
    # o
    yarn dev
    ```
-4. Accede a la aplicación en [http://localhost:5173](http://localhost:5173)
+5. Accede a la aplicación en [http://localhost:5173](http://localhost:5173)
 
 ## Uso
 
@@ -43,6 +52,10 @@ Este proyecto es una aplicación web desarrollada con React, TypeScript y Vite, 
 - Accede al carrito para revisar o modificar productos seleccionados.
 - Completa el proceso de compra desde el checkout.
 - Si tienes permisos de administrador, gestiona productos desde el panel de administración.
+- Para autenticación:
+   La aplicación usa Auth0 con OAuth de Google.
+   Se muestra un botón de login/logout que permite iniciar sesión con Google.
+   Al autenticarse, el usuario podrá acceder a funcionalidades restringidas.
 
 ## Tecnologías utilizadas
 
@@ -51,6 +64,7 @@ Este proyecto es una aplicación web desarrollada con React, TypeScript y Vite, 
 - [Vite](https://vitejs.dev/)
 - [ESLint](https://eslint.org/) (con reglas recomendadas y soporte para React)
 - [pnpm](https://pnpm.io/) (o npm/yarn)
+- [Auth0 React SDK](https://auth0.com/docs/libraries/auth0-react)
 
 ## Estructura del proyecto
 
